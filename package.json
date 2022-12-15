@@ -15,7 +15,7 @@
   },
   "keywords": ["Youtube", "Deezer", "Spotify", "Soundcloud", "Search"],
   "homepage": "https://github.com/KamKam0/music-search",
-  "author": "KamKam <darkness.group.system@gmail.com>",
+  "author": "KamKam <kamkam.dev.contact@gmail.com>",
   "license": "BSC 2",
   "dependencies": {
     "node-fetch": "^2.6.7"
