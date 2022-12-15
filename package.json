@@ -13,6 +13,7 @@
   "bugs": {
     "url": "https://github.com/KamKam0/music-search/issues"
   },
+  "keywords": ["Youtube", "Deezer", "Spotify", "Soundcloud", "Search"],
   "homepage": "https://github.com/KamKam0/music-search",
   "author": "KamKam <darkness.group.system@gmail.com>",
   "license": "BSC 2",
