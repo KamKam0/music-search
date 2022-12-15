@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/monatheoctocat/my_package.git"
+    "url": "https://github.com/KamKam0/music-search.git"
   },
   "bugs": {
-    "url": "https://github.com/monatheoctocat/my_package/issues"
+    "url": "https://github.com/KamKam0/music-search/issues"
   },
-  "homepage": "https://github.com/monatheoctocat/my_package",
+  "homepage": "https://github.com/KamKam0/music-search",
   "author": "KamKam <darkness.group.system@gmail.com>",
   "license": "BSC 2",
   "dependencies": {
