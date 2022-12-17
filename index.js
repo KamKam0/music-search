@@ -1,4 +1,4 @@
-exports.version = "3.0.2"
+exports.version = require("./package.json").version
 exports.Youtube = require("./Youtube/structure")
 exports.Spotify = require("./Spotify/structure")
 exports.SoundCloud = require("./SoundCloud/structure")
