@@ -1,10 +1,11 @@
-class Playlist{
+const Base = require("./base")
+class Playlist extends Base{
     constructor(datas){
-        this.title = datas.list.title,
-        this.icon = datas.list.thumbnail,
-        this.channel_name = datas.list.channel_name,
-        this.channel_url = datas.list.channel_url,
-        this.url = datas.list.url
+        super(datas)
+        this.title = datas.list.title
+        this.icon = datas.list.thumbnail
+        this.channel_name = datas.list.channel_name
+        this.channel_url = datas.list.channel_url
         this.songs = datas.songs
         this.plateforme = this.getPlatform()
         this.type = "Playlist"

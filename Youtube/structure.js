@@ -1,9 +1,24 @@
+const Playlist = require("../Classes/playlist")
+const Track = require("../Classes/track")
+
 class Youtube{
     constructor(){
+        /**
+         * @param {string} type
+         */
         this.type = 'Youtube'
+        /**
+         * @param {object[]} type
+         */
         this.available = ["track", "search", "playlist"]
     }
 
+    /**
+     * 
+     * @param {string} Arg 
+     * @param {string} tag 
+     * @returns {Track}
+     */
     GetTrack(Arg, tag){
         return new Promise(async (resolve, reject) => {
             require("./track")( Arg, tag)
@@ -12,6 +27,12 @@ class Youtube{
         })
     }
 
+    /**
+     * 
+     * @param {string} Arg 
+     * @param {string} tag 
+     * @returns {object[]}
+     */
     Search(Arg, tag){
         return new Promise(async (resolve, reject) => {
             require("./search")( Arg, tag)
@@ -20,6 +41,12 @@ class Youtube{
         })
     }
 
+    /**
+     * 
+     * @param {string} Arg 
+     * @param {string} tag 
+     * @returns {Playlist}
+     */
     GetPlaylist(Arg, tag){
         return new Promise(async (resolve, reject) => {
             require("./playlist")( Arg, tag)
@@ -28,6 +55,13 @@ class Youtube{
         })
     }
 
+    /**
+     * 
+     * @param {string} type 
+     * @param {string} Arg 
+     * @param {string} tag 
+     * @returns {Track|Playlist|object[]}
+     */
     Get(type, Arg, tag){
         return new Promise(async (resolve, reject) => {
             if(!this.available.includes(type)) return reject("invalid type")

@@ -1,5 +1,7 @@
-class Track{
+const Base = require("./base")
+class Track extends Base{
     constructor(song){
+        super(song)
         this.title = song.title
         this.url = song.url
         this.time = song.time
@@ -10,16 +12,7 @@ class Track{
         this.place = song.place
         this.format = song.format ? song.format : null
         this.stream_url = song.stream_url ? song.stream_url : null
-        this.plateforme = this.getPlatform()
         this.type = "Track"
-    }
-
-    getPlatform(){
-        if(this.url.includes("youtube")) return "Youtube"
-        else if(this.url.includes("spotify")) return "Spotify"
-        else if(this.url.includes("soundcloud")) return "SoundCloud"
-        else if(this.url.includes("deezer")) return "Deezer"
-        else return undefined
     }
 
     ConvertYTB(){

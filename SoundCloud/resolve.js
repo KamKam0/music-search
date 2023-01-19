@@ -1,6 +1,15 @@
 const track = require("./track")
 const album = require("./album")
 const playlist = require("./playlist")
+const Track = require("../Classes/track")
+const Album = require("../Classes/album")
+const Playlist = require("../Classes/playlist")
+/**
+ * @param {string} token
+ * @param {string} Arg 
+ * @param {string} tag 
+ * @returns {Track|Album|Playlist}
+ */
 module.exports = async (token, Arg, tag) => {
     return new Promise(async (resolve, reject) => {
         const fetch = require("node-fetch")

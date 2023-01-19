@@ -1,3 +1,7 @@
+const Album = require("../Classes/album")
+const Playlist = require("../Classes/playlist")
+const Track = require("../Classes/track")
+
 class Spotify{
     constructor(client_id, client_secret){
         this.id = client_id
@@ -8,6 +12,10 @@ class Spotify{
         this.available = ["track", "album", "playlist"]
     }
 
+    /**
+     * 
+     * @returns {string}
+     */
     GetToken(){
         return new Promise(async (resolve, reject) => {
             if((Date.now() - Number(this.timestamp)) >= (1000 * 60 * 60)){
@@ -35,6 +43,12 @@ class Spotify{
         })
     }
 
+    /**
+     * @param {string} Arg 
+     * @param {string} tag 
+     * @param {boolean} state 
+     * @returns {Track}
+     */
     GetTrack(Arg, tag, state){
         return new Promise(async (resolve, reject) => {
             this.GetToken().then(() => {
@@ -45,6 +59,11 @@ class Spotify{
         })
     }
 
+    /**
+     * @param {string} Arg 
+     * @param {string} tag 
+     * @returns {Album}
+     */
     GetAlbum(Arg, tag){
         return new Promise(async (resolve, reject) => {
             this.GetToken().then(() => {
@@ -55,6 +74,12 @@ class Spotify{
         })
     }
 
+
+    /**
+     * @param {string} Arg 
+     * @param {string} tag 
+     * @returns {Playlist}
+     */
     GetPlaylist(Arg, tag){
         return new Promise(async (resolve, reject) => {
             this.GetToken().then(() => {
@@ -65,15 +90,19 @@ class Spotify{
         })
     }
 
-
-    Get(type, Arg, tag, state){
+    /**
+     * 
+     * @param {string} type 
+     * @param {string} Arg 
+     * @param {string} tag 
+     * @returns {Track|Playlist|Album}
+     */
+    Get(type, Arg, tag){
         return new Promise(async (resolve, reject) => {
             if(!this.available.includes(type)) return reject("invalid type")
-            this.GetToken().then(() => {
-                require(`./${type}`)(this.token, Arg, tag, state)
-                .catch(err => { return reject(err) })
-                .then(datas => { return resolve(datas) })
-            })
+            require(`./${type}`)(Arg, tag)
+            .catch(err => { return reject(err) })
+            .then(datas => { return resolve(datas) })
         })
     }
 }

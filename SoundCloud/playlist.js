@@ -1,6 +1,12 @@
 const Track = require("../Classes/track")
 const Playlist = require("../Classes/playlist")
 const fetch = require("node-fetch")
+/**
+ * @param {string} token
+ * @param {string} Arg 
+ * @param {string} tag 
+ * @returns {Playlist}
+ */
 module.exports = async (token, datas, tag) => {
     return new Promise(async (resolve, reject) => {
         let provisoire = []

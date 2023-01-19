@@ -1,3 +1,7 @@
+const Album = require("../Classes/album")
+const Playlist = require("../Classes/playlist")
+const Track = require("../Classes/track")
+
 class SoundCloud{
     constructor(){
         this.token = null
@@ -6,6 +10,10 @@ class SoundCloud{
         this.available = ["resolve"]
     }
 
+    /**
+     * 
+     * @returns {string}
+     */
     GetToken(){
         return new Promise(async (resolve, reject) => {
             if((Date.now() - Number(this.timestamp)) >= (1000 * 60 * 60)){
@@ -29,6 +37,12 @@ class SoundCloud{
         })
     }
 
+    /**
+     * 
+     * @param {string} Arg 
+     * @param {string} tag 
+     * @returns {Track|Album|Playlist}
+     */
     Resolve(Arg, tag){
         return new Promise(async (resolve, reject) => {
             this.GetToken().then(() => {
@@ -49,14 +63,19 @@ class SoundCloud{
         })
     }
 
-    Get(type, Arg, tag, state){
+    /**
+     * 
+     * @param {string} type 
+     * @param {string} Arg 
+     * @param {string} tag 
+     * @returns {Track|Playlist|Album}
+     */
+    Get(type, Arg, tag){
         return new Promise(async (resolve, reject) => {
             if(!this.available.includes(type)) return reject("invalid type")
-            this.GetToken().then(() => {
-                require(`./${type}`)(this.token, Arg, tag, state)
-                .catch(err => { return reject(err) })
-                .then(datas => { return resolve(datas) })
-            })
+            require(`./${type}`)(Arg, tag)
+            .catch(err => { return reject(err) })
+            .then(datas => { return resolve(datas) })
         })
     }
 }

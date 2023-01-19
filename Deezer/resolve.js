@@ -1,3 +1,7 @@
+/**
+ * @param {string} Arg 
+ * @returns {Track|Album|Playlist}
+ */
 module.exports = async (Arg) => {
     return new Promise(async (resolve, reject) => {
         const fetch = require("node-fetch")

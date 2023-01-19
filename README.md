@@ -1,4 +1,4 @@
-# ErrorHandler
+# MusicSearch
 MusicSearch is a simple to use module that allows you to retrieve informations about a song on various platforms
 
 ## Installation

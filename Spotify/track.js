@@ -1,4 +1,11 @@
 const Track = require("../Classes/track")
+/**
+ * @param {string} token 
+ * @param {string} Arg 
+ * @param {string} tag 
+ * @param {boolean} state 
+ * @returns {Track}
+ */
 module.exports = async (token, Arg, tag, state) => {
     return new Promise(async (resolve, reject) => {
         const fetch = require("node-fetch")

@@ -1,4 +1,10 @@
 const Track = require("../Classes/track")
+/**
+ * 
+ * @param {string} Arg 
+ * @param {string} tag 
+ * @returns {Track}
+ */
 module.exports = async (Arg, tag) => {
     return new Promise(async (resolve, reject) => {
 

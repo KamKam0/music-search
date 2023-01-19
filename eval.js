@@ -1,3 +1,8 @@
+/**
+ * 
+ * @param {string} url 
+ * @returns {object}
+ */
 module.exports = (url) => {
     if(!url) return 'informations manquantes'
     let result = {plateforme: null, type: null, link: null}
