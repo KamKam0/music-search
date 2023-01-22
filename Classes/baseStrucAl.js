@@ -13,7 +13,7 @@ class BaseAlbum extends base{
      */
     getAlbum(Arg, tag){
         return new Promise(async (resolve, reject) => {
-            this.__requestMaker("album", Arg, tag)
+            this._requestMaker("album", Arg, tag)
             .catch(err => reject(err))
             .then(datas => resolve(datas))
         })

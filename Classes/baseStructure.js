@@ -17,7 +17,7 @@ class Base{
      */
     getTrack(Arg, tag, state){
         return new Promise(async (resolve, reject) => {
-            this.__requestMaker("track", Arg, tag, state)
+            this._requestMaker("track", Arg, tag, state)
             .catch(err => reject(err))
             .then(datas => resolve(datas))
         })
@@ -31,7 +31,7 @@ class Base{
      */
     getPlaylist(Arg, tag){
         return new Promise(async (resolve, reject) => {
-            this.__requestMaker("playlist", Arg, tag)
+            this._requestMaker("playlist", Arg, tag)
             .catch(err => reject(err))
             .then(datas => resolve(datas))
         })
@@ -47,23 +47,35 @@ class Base{
     get(type, Arg, tag){
         return new Promise(async (resolve, reject) => {
             if(!this.available.includes(type)) return reject(new Error("Invalid type of research", 15))
-            this.__requestMaker(type, Arg, tag)
+            this._requestMaker(type, Arg, tag)
             .catch(err => reject(err))
             .then(datas => resolve(datas))
         })
     }
 
-    __requestMaker(type, arg, tag, state){
+    /**
+     * @private
+     * @param {string} type 
+     * @param {string} arg 
+     * @param {string} tag 
+     * @param {boolean} state 
+     * @returns 
+     */
+    _requestMaker(type, arg, tag, state){
         return new Promise(async (resolve, reject) => {
-            this.__getToken()
+            this._getToken()
             .then(() => {
-                if(this.__token) require(`../${this.type}/${type}`)(this.__token, arg, tag, state).catch(err => reject(err)).then(datas => resolve(datas))
+                if(this._token) require(`../${this.type}/${type}`)(this._token, arg, tag, state).catch(err => reject(err)).then(datas => resolve(datas))
                 else require(`../${this.type}/${type}`)(arg, tag, state).catch(err => reject(err)).then(datas => resolve(datas))
             }).catch(err => {})
         })
     }
 
-    __getToken(){
+    /**
+     * 
+     * @returns {undefined}
+     */
+    _getToken(){
         return new Promise(async (resolve, reject) => {
             resolve()
         })

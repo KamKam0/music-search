@@ -12,7 +12,7 @@ class BaseResolve extends base{
      */
     resolve(Arg){
         return new Promise(async (resolve, reject) => {
-            this.__requestMaker("resolve", Arg)
+            this._requestMaker("resolve", Arg)
             .catch(err => reject(err))
             .then(datas => resolve(datas))
         })

@@ -8,6 +8,8 @@ const analyser = require("./analyseDatas")
  * @returns {Track|Error}
  */
 module.exports = async (token, Arg, tag) => {
-    if(!Arg || typeof Arg !== "object") return reject(new Error("No valid argument given", 1))
-    return new Track({...analyser(Arg, tag), token})
+    return new Promise(async (resolve, reject) => {
+        if(!Arg || typeof Arg !== "object") return reject(new Error("No valid argument given", 1))
+        return resolve(new Track({...analyser(Arg, tag), token}))
+    })
 }

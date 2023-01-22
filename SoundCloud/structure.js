@@ -3,17 +3,25 @@ const base = require("../Classes/baseStrucRes")
 class SoundCloud extends base{
     constructor(){
         super("SoundCloud")
-        this.__token = null
-        this.__timestamp = null
+        /**
+         * @private
+         * @type {string}
+         */
+        this._token = null
+        /**
+         * @private
+         * @type {string}
+         */
+        this._timestamp = null
     }
 
     /**
-     * 
+     * @private
      * @returns {string}
      */
-    __getToken(){
+    _getToken(){
         return new Promise(async (resolve, reject) => {
-            if((Date.now() - Number(this.__timestamp)) >= (1000 * 60 * 60)){
+            if((Date.now() - Number(this._timestamp)) >= (1000 * 60 * 60)){
                 const fetch = require("node-fetch")
                 fetch("https://soundcloud.com/").then(async res => {
                     res = await res.text()
@@ -24,20 +32,20 @@ class SoundCloud extends base{
                         datas = await datas.text()
                         datas = datas.split(',client_id:"')[1]
                         datas = datas.split('"')[0]
-                        this.__token = datas
-                        this.__timestamp = Date.now()
-                        return resolve(this.__token)
+                        this._token = datas
+                        this._timestamp = Date.now()
+                        return resolve(this._token)
                     })
                 })
                 
-            }else return resolve(this.__token)
+            }else return resolve(this._token)
         })
     }
 
     getStream(url){
         return new Promise(async (resolve, reject) => {
-            this.GetToken().then(() => {
-                require("./stream")(this.token, url)
+            this._getToken().then(() => {
+                require("./stream")(this._token, url)
                 .catch(err => { return reject(err) })
                 .then(datas => { return resolve(datas) })
             })
