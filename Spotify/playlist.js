@@ -1,16 +1,17 @@
 const Track = require("../Classes/track")
 const Playlist = require("../Classes/playlist")
+const Error = require("../Classes/error")
 /**
  * @param {string} token
  * @param {string} Arg 
  * @param {string} tag 
- * @returns {Playlist}
+ * @returns {Playlist|Error}
  */
 module.exports = async (token, Arg, tag) => {
     return new Promise(async (resolve, reject) => {
         const fetch = require("node-fetch")
-        if(!Arg) return reject('manque d\'informations')
-        if(!Arg.includes("spotify") || !Arg.includes("playlist")) return reject('error 404')
+        if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
+        if(!Arg.includes("spotify") || !Arg.includes("playlist")) return reject(new Error("Incorrect URL", 2))
         let base = Arg.split("playlist/")[1]
         let datas = await fetch(`https://api.spotify.com/v1/playlists/${base.includes("?") ? base.split("?")[0]: base}`, {
             headers: {
@@ -19,7 +20,7 @@ module.exports = async (token, Arg, tag) => {
         })
         datas = await datas.json()
         
-        if(datas.error?.status === 404) return reject('error 404p')
+        if(datas.error?.status === 404) return reject(new Error("Could not find the playlist", 7))
         
         let result = {
             list: {
@@ -31,9 +32,9 @@ module.exports = async (token, Arg, tag) => {
             },
             songs: datas.tracks.items.filter(song => song.track !== null).map(song => {
                 song = song.track
-                let dv = {title: song.name, url: song.external_urls.spotify, time: Math.round(song.duration_ms / 1000), icon: null, artist_nom: song.artists[0].name, artist_url: song.artists[0].external_urls.spotify, requestor: tag ? tag : null, place: null}
-                return new Track(dv)
-            })
+                if(song) return new Track({title: song.name, url: song.external_urls.spotify, time: Math.round(song.duration_ms / 1000), icon: null, artist_nom: song.artists[0].name, artist_url: song.artists[0].external_urls.spotify, requestor: tag ? tag : null, place: null})
+                return undefined
+            }).filter(e => e)
         }
         
         return resolve(new Playlist(result))

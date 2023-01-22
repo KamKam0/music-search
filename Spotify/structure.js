@@ -1,25 +1,22 @@
-const Album = require("../Classes/album")
-const Playlist = require("../Classes/playlist")
-const Track = require("../Classes/track")
+const base = require("../Classes/baseStrucAl")
 
-class Spotify{
+class Spotify extends base{
     constructor(client_id, client_secret){
-        this.id = client_id
-        this.secret = client_secret
-        this.token = null
-        this.timestamp = null
-        this.type = 'Spotify'
-        this.available = ["track", "album", "playlist"]
+        super("Spotify")
+        this.__id = client_id
+        this.__secret = client_secret
+        this.__token = null
+        this.__timestamp = null
     }
 
     /**
      * 
      * @returns {string}
      */
-    GetToken(){
+    __getToken(){
         return new Promise(async (resolve, reject) => {
-            if((Date.now() - Number(this.timestamp)) >= (1000 * 60 * 60)){
-                const encode = new Buffer.from(`${this.id}:${this.secret}`).toString("base64")
+            if((Date.now() - Number(this.__timestamp)) >= (1000 * 60 * 60)){
+                const encode = new Buffer.from(`${this.__id}:${this.__secret}`).toString("base64")
                 const opts = {
                     body: 'grant_type=client_credentials',
                     headers: {
@@ -34,75 +31,12 @@ class Spotify{
                 datas = await datas.json()
                 let token = datas.access_token
                 if(token){
-                    this.token = token
-                    this.timestamp = Date.now()
+                    this.__token = token
+                    this.__timestamp = Date.now()
                     return resolve(token)
                 }else return reject(token)
                 
-            }return resolve(this.token)
-        })
-    }
-
-    /**
-     * @param {string} Arg 
-     * @param {string} tag 
-     * @param {boolean} state 
-     * @returns {Track}
-     */
-    GetTrack(Arg, tag, state){
-        return new Promise(async (resolve, reject) => {
-            this.GetToken().then(() => {
-                require("./track")(this.token, Arg, tag, state)
-                .catch(err => { return reject(err) })
-                .then(datas => { return resolve(datas) })
-            })
-        })
-    }
-
-    /**
-     * @param {string} Arg 
-     * @param {string} tag 
-     * @returns {Album}
-     */
-    GetAlbum(Arg, tag){
-        return new Promise(async (resolve, reject) => {
-            this.GetToken().then(() => {
-                require("./album")(this.token, Arg, tag)
-                .catch(err => { return reject(err) })
-                .then(datas => { return resolve(datas) })
-            })
-        })
-    }
-
-
-    /**
-     * @param {string} Arg 
-     * @param {string} tag 
-     * @returns {Playlist}
-     */
-    GetPlaylist(Arg, tag){
-        return new Promise(async (resolve, reject) => {
-            this.GetToken().then(() => {
-                require("./playlist")(this.token, Arg, tag)
-                .catch(err => { return reject(err) })
-                .then(datas => { return resolve(datas) })
-            })
-        })
-    }
-
-    /**
-     * 
-     * @param {string} type 
-     * @param {string} Arg 
-     * @param {string} tag 
-     * @returns {Track|Playlist|Album}
-     */
-    Get(type, Arg, tag){
-        return new Promise(async (resolve, reject) => {
-            if(!this.available.includes(type)) return reject("invalid type")
-            require(`./${type}`)(Arg, tag)
-            .catch(err => { return reject(err) })
-            .then(datas => { return resolve(datas) })
+            }return resolve(this.__token)
         })
     }
 }

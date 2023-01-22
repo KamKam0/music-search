@@ -9,7 +9,7 @@ module.exports = (url) => {
     if(url.startsWith("https://youtu.be/")) url = `https://www.youtube.com/watch?v=${url.split(".be/")[1]}`
     
     if(url.includes("https")){
-        if(url.includes("youtube")) {
+        if(url.includes("youtube") || url.includes("youtu.be")) {
             result.plateforme = 'Youtube'
             result.link = url
             if(url.includes("list")) result.type = "playlist"

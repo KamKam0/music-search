@@ -1,5 +1,6 @@
 const Base = require("./base")
 class Track extends Base{
+    #plateformeToken;
     constructor(song){
         super(song)
         this.title = song.title
@@ -13,22 +14,21 @@ class Track extends Base{
         this.format = song.format ? song.format : null
         this.stream_url = song.stream_url ? song.stream_url : null
         this.type = "Track"
+        this.#plateformeToken = song.token
     }
 
-    ConvertYTB(){
+    convertYTB(){
         return new Promise(async (resolve, reject) => {
             if(this.plateforme === "Youtube") return resolve(this)
             else{
                 require("../Youtube/search")(`${this.title} ${this.artist_nom}`)
-                .catch(err => { return reject(null) })
-                .then(datas => {
-                    return resolve(datas)
-                })
+                .catch(err => reject(err))
+                .then(datas => resolve(datas[0]))
             }
         })
     }
 
-    Stream_Link(){
+    streamLink(){
         return new Promise(async (resolve, reject) => {
             if(this.plateforme === "Youtube"){
                 return reject("Unavailable")
@@ -40,11 +40,9 @@ class Track extends Base{
                 return reject("Unavailable")
             }
             if(this.plateforme === "SoundCloud"){
-                require("../SoundCloud/stream")()(this.stream_url)
-                .catch(err => { return reject(err) })
-                .then(datas => {
-                    return resolve(datas)
-                })
+                require("../SoundCloud/stream")(this.#plateformeToken, this.stream_url)
+                .catch(err => reject(err) )
+                .then(datas => resolve(datas))
             }
             else return reject("Invalid Platform")
         })

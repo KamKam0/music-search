@@ -1,22 +1,26 @@
 const Playlist = require("../Classes/playlist")
 const Track = require("../Classes/track")
+const Error = require("../Classes/error")
 /**
  * @param {string} Arg 
  * @param {string} tag 
- * @returns {Playlist}
+ * @returns {Playlist|Error}
  */
 module.exports = async (Arg, tag) => {
     return new Promise(async (resolve, reject) => {
         const fetch = require("node-fetch")
-        if(!Arg) return reject('manque d\'informations')
-        if(!Arg.startsWith("https://www.deezer.com/")) return reject('error deezer')
-        if(!Arg.includes("deezer") || !Arg.includes("playlist")) return reject('error 404')
+        if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
+        if(Arg.startsWith("https://deezer.page.link")) return reject(new Error("This URL needs to be resolved first", 13))
+        if(!Arg.startsWith("https://www.deezer.com/") || (!Arg.includes("deezer") || !Arg.includes("playlist"))) return reject(new Error("Incorrect URL", 2))
+
         let ID = Arg.split("/playlist/")[1]
-        let datas = await fetch(`https://api.deezer.com/playlist/${ID}`)
+        let datas = await fetch(`https://api.deezer.com/playlist/${ID.includes("?") ? ID.split("?")[0]: ID}`)
         datas = await datas.json()
-        if(datas.error?.type === "OAuthException" && datas.error?.code === 200) return reject('error private')
-        if(!datas) return reject('error 404p')
-        if(datas.error?.code === 800) return reject('error 404p')
+
+        if(datas.error?.type === "OAuthException" && datas.error?.code === 200) return reject(new Error("Could not find the playlist", 7))
+
+        if(!datas || datas.error?.code === 800) return reject(new Error("Could not find the playlist", 7))
+
         let result = {
             list: {
                 title: datas.title,
@@ -34,8 +38,7 @@ module.exports = async (Arg, tag) => {
                 let artist_url = `https://www.deezer.com/fr/artist/${song.artist.id}`
                 let requestor = tag ? tag : null
                 let place = null
-                let vd = {title, url, time, icon, artist_nom, artist_url, requestor, place}
-                return new Track(vd)
+                return new Track({title, url, time, icon, artist_nom, artist_url, requestor, place})
             })
         }
         return resolve(new Playlist(result))

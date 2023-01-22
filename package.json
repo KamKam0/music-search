@@ -1,6 +1,6 @@
 {
   "name": "@kamkam1_0/music-search",
-  "version": "3.0.5",
+  "version": "4.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,11 +13,18 @@
   "bugs": {
     "url": "https://github.com/KamKam0/music-search/issues"
   },
-  "keywords": ["Youtube", "Deezer", "Spotify", "Soundcloud", "Search"],
+  "keywords": [
+    "Youtube",
+    "Deezer",
+    "Spotify",
+    "Soundcloud",
+    "Search"
+  ],
   "homepage": "https://github.com/KamKam0/music-search",
   "author": "KamKam <kamkam.dev.contact@gmail.com>",
   "license": "BSD 2",
   "dependencies": {
+    "fs": "^0.0.1-security",
     "node-fetch": "^2.6.7"
   }
 }
