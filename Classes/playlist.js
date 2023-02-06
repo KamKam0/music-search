@@ -3,11 +3,11 @@ class Playlist extends Base{
     constructor(datas){
         super(datas)
         this.title = datas.list.title
-        this.icon = datas.list.thumbnail
+        this.thumbnail = datas.list.thumbnail
         this.channel_name = datas.list.channel_name
         this.channel_url = datas.list.channel_url
         this.songs = datas.songs
-        this.plateforme = this.getPlatform()
+        this.plateform = this.getPlatform()
         this.type = "Playlist"
     }
 

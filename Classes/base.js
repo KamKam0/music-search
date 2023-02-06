@@ -1,7 +1,7 @@
 class base{
     constructor(datas){
         this.url = datas.list?.url || datas.url
-        this.plateforme = this.#getPlatform()
+        this.plateform = this.#getPlatform()
     }
 
     #getPlatform(){

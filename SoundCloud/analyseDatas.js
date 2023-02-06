@@ -2,10 +2,10 @@ module.exports = (datas, tag) => {
     let title = datas.title
     let url = datas.permalink_url
     let time = Number(String(datas.duration / 1000).split(".")[0])
-    let icon = datas.artwork_url
-    let artist_nom;
-    if(datas.publisher_metadata) artist_nom = datas.publisher_metadata?.artist
-    else artist_nom = datas.user.username
+    let thumbnail = datas.artwork_url
+    let artist_name;
+    if(datas.publisher_metadata) artist_name = datas.publisher_metadata?.artist
+    else artist_name = datas.user.username
     let artist_url;
     if(datas.publisher_metadata) artist_url = `https://soundcloud.com/secret-service-${datas.publisher_metadata?.id}`
     else artist_url = `https://soundcloud.com/secret-service-${datas.user.id}`
@@ -16,5 +16,5 @@ module.exports = (datas, tag) => {
     else stream_url = null
     let requestor = tag ? tag : null
     let place = null
-    return {title, url, time, icon, artist_nom, artist_url, stream_url, requestor, place}
+    return {title, url, time, thumbnail, artist_name, artist_url, stream_url, requestor, place}
 }

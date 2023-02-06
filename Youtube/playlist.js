@@ -39,12 +39,12 @@ module.exports = async (Arg, tag) => {
                 let title = music.title.runs[0].text
                 let url = `https://www.youtube.com/watch?v=${music.videoId}`
                 let time = Number(music.lengthSeconds)
-                let icon = music.thumbnail.thumbnails[0].url
-                let artist_nom = music.shortBylineText.runs[0].text
+                let thumbnail = music.thumbnail.thumbnails[0].url
+                let artist_name = music.shortBylineText.runs[0].text
                 let artist_url = `https://www.youtube.com/channel/${music.shortBylineText.runs[0].navigationEndpoint.browseEndpoint.browseId}`
                 let requestor = tag ? tag : null
                 let place = null
-                return new Track({title, url, time, icon, artist_nom, artist_url, requestor, place})
+                return new Track({title, url, time, thumbnail, artist_name, artist_url, requestor, place})
             }
             return undefined
         }).filter(e => e)

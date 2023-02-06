@@ -22,12 +22,12 @@ module.exports = async (Arg, tag, state) => {
         let title = datas.title
         let url = datas.link
         let time = Number(datas.duration)
-        let icon = `https://e-cdns-images.dzcdn.net/images/cover/${datas.md5_image}/250x250-000000-80-0-0.jpg`
-        let artist_nom = datas.artist.name
+        let thumbnail = `https://e-cdns-images.dzcdn.net/images/cover/${datas.md5_image}/250x250-000000-80-0-0.jpg`
+        let artist_name = datas.artist.name
         let artist_url = datas.artist.link
         let requestor = tag ? tag : null
         let place = null
-        let track = new Track({title, url, time, icon, artist_nom, artist_url, requestor, place})
+        let track = new Track({title, url, time, thumbnail, artist_name, artist_url, requestor, place})
         if(!state) return resolve(track)
         track.convertYTB()
         .then(e => resolve(e))

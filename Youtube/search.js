@@ -45,7 +45,7 @@ module.exports = async (Arg, tag) => {
         
         details = details.map(song => {
             if(song) song = song.videoRenderer; 
-            if(song) return new Track({title: song.title.runs[0].text, url: `https://www.youtube.com/watch?v=${song.videoId}`, time: Number(`${(Number(song.lengthText.simpleText.split(":")[0]) * 60) + Number(song.lengthText.simpleText.split(":")[1])}`), icon: song.thumbnail.thumbnails[0].url, artist_nom: song.ownerText.runs[0].text, artist_url: `https://www.youtube.com/channel/${song.ownerText.runs[0].navigationEndpoint.browseEndpoint.browseId}`, requestor: tag ? tag : null, place: null})
+            if(song) return new Track({title: song.title.runs[0].text, url: `https://www.youtube.com/watch?v=${song.videoId}`, time: Number(`${(Number(song.lengthText.simpleText.split(":")[0]) * 60) + Number(song.lengthText.simpleText.split(":")[1])}`), thumbnail: song.thumbnail.thumbnails[0].url, artist_name: song.ownerText.runs[0].text, artist_url: `https://www.youtube.com/channel/${song.ownerText.runs[0].navigationEndpoint.browseEndpoint.browseId}`, requestor: tag ? tag : null, place: null})
             return undefined
         }).filter(e => e)
         

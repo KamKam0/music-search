@@ -30,7 +30,7 @@ module.exports = async (token, Arg, tag) => {
                 channel_url: datas.artists[0].external_urls.spotify,
                 url: datas.external_urls.spotify
             },
-            songs: datas.tracks.items.map(song => new Track({title: song.name, url: song.external_urls.spotify, time: Math.round(song.duration_ms / 1000), icon: null, artist_nom: song.artists[0].name, artist_url: song.artists[0].external_urls.spotify, requestor: tag ? tag : null, place: null}))
+            songs: datas.tracks.items.map(song => new Track({title: song.name, url: song.external_urls.spotify, time: Math.round(song.duration_ms / 1000), thumbnail: null, artist_name: song.artists[0].name, artist_url: song.artists[0].external_urls.spotify, requestor: tag ? tag : null, place: null}))
         }
         return resolve(new Album(result))
     })

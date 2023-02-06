@@ -31,12 +31,12 @@ module.exports = async (Arg, tag) => {
                 let title = song.title
                 let url = song.link
                 let time = Number(song.duration)
-                let icon = `https://e-cdns-images.dzcdn.net/images/cover/${song.md5_image}/250x250-000000-80-0-0.jpg`
-                let artist_nom = song.artist.name
+                let thumbnail = `https://e-cdns-images.dzcdn.net/images/cover/${song.md5_image}/250x250-000000-80-0-0.jpg`
+                let artist_name = song.artist.name
                 let artist_url = `https://www.deezer.com/fr/artist/${datas.artist.id}`
                 let requestor = tag ? tag : null
                 let place = null
-                return new Track({title, url, time, icon, artist_nom, artist_url, requestor, place})
+                return new Track({title, url, time, thumbnail, artist_name, artist_url, requestor, place})
             })
         }
         return resolve(new Album(result))

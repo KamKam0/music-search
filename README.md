@@ -17,17 +17,17 @@ npm i @kamkam1_0/music-search
 ### Initiating the module
 ```js
 const MusicSearch = require("@kamkam1_0/music-search")
-let Youtube = new Search.Youtube()
-let Deezer = new Search.Deezer()
-let SoundCloud = new Search.SoundCloud()
-let Spotify = new Search.Spotify("CLIENT KEY", "SECRET KEY")
+let Youtube = new MusicSearch.Youtube()
+let Deezer = new MusicSearch.Deezer()
+let SoundCloud = new MusicSearch.SoundCloud()
+let Spotify = new MusicSearch.Spotify("CLIENT KEY", "SECRET KEY")
 ```
 
 ### General
 You can use the eval command to tell you the general informations about the song
 ```js
 let song = MusicSearch.eval("URL/NAME")
-//expected output: {plateforme: "", link: "URL/NAME", type: ""}
+//expected output: {plateform: "", link: "URL/NAME", type: ""}
 //The platform is one of the listed before
 //The link corresponding to the given argument
 //The type is the command to execute for the given argument
@@ -43,28 +43,28 @@ let song = MusicSearch.eval("URL/NAME")
             title: 'Luis Fonsi - Despacito ft. Daddy Yankee',
             url: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk',
             time: 282,
-            artist_nom: 'Luis Fonsi',
+            artist_name: 'Luis Fonsi',
             artist_url: 'https://www.youtube.com/channel/UCxoq-PAQeAdk_zyg8YS0JqA',
             requestor: null,
-            icon: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBCg9eudi8DoM9M-qjPgJBGGkuIgA',
+            thumbnail: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBCg9eudi8DoM9M-qjPgJBGGkuIgA',
             place: null,
             format: null,
             stream_url: null,
-            plateforme: 'Youtube',
+            plateform: 'Youtube',
             type: 'Track'
         },
         Track {
             title: 'Luis Fonsi ‒ Despacito (Lyrics / Lyric Video) ft. Daddy Yankee',
             url: 'https://www.youtube.com/watch?v=gm3-m2CFVWM',
             time: 241,
-            artist_nom: 'Taz Network',
+            artist_name: 'Taz Network',
             artist_url: 'https://www.youtube.com/channel/UCJ6ERWrxZzb9Ua3oeRcIe0g',
             requestor: null,
-            icon: 'https://i.ytimg.com/vi/gm3-m2CFVWM/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBdnMRJ4yJ6vHumS_nU46yxFLqRjQ',
+            thumbnail: 'https://i.ytimg.com/vi/gm3-m2CFVWM/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBdnMRJ4yJ6vHumS_nU46yxFLqRjQ',
             place: null,
             format: null,
             stream_url: null,
-            plateforme: 'Youtube',
+            plateform: 'Youtube',
             type: 'Track'
         },
         ...
@@ -89,14 +89,14 @@ Track Command
         title: 'Luis Fonsi - Despacito ft. Daddy Yankee',
         url: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk',
         time: 282,
-        artist_nom: 'LuisFonsiVEVO',
+        artist_name: 'LuisFonsiVEVO',
         artist_url: 'https://www.youtube.com/channel/UCLp8RBhQHu9wSsq62j_Md6A',
         requestor: null,
-        icon: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCuffhiAPaneh-5dnyfyvY_mDwxhQ',
+        thumbnail: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCuffhiAPaneh-5dnyfyvY_mDwxhQ',
         place: null,
         format: [],
         stream_url: null,
-        plateforme: 'Youtube',
+        plateform: 'Youtube',
         type: 'Track'
     */
 ```
@@ -108,7 +108,7 @@ Playlist Command
     /*
         Playlist {
             title: 'Despacito Playlist',
-            icon: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&rs=AOn4CLBEbPjZNLOTWKK9IgpBYcBjav7eVw',
+            thumbnail: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&rs=AOn4CLBEbPjZNLOTWKK9IgpBYcBjav7eVw',
             channel_name: 'skassira12',
             channel_url: 'https://www.youtube.com/channel/UC65xgmFhe679BVFdML8ilgA',
             url: 'https://www.youtube.com/playlist?list=PLVKH3RmLAlPgSVRlwh7RfbCGUO4P80i-A',
@@ -117,14 +117,14 @@ Playlist Command
                 title: 'Luis Fonsi - Despacito ft. Daddy Yankee',
                 url: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk',
                 time: 282,
-                artist_nom: 'Luis Fonsi',
+                artist_name: 'Luis Fonsi',
                 artist_url: 'https://www.youtube.com/channel/UCxoq-PAQeAdk_zyg8YS0JqA',
                 requestor: null,
-                icon: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCuffhiAPaneh-5dnyfyvY_mDwxhQ',
+                thumbnail: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCuffhiAPaneh-5dnyfyvY_mDwxhQ',
                 place: null,
                 format: null,
                 stream_url: null,
-                plateforme: 'Youtube',
+                plateform: 'Youtube',
                 type: 'Track'
                 },
                 ...
@@ -140,7 +140,7 @@ Album Command
     /*
         Playlist {
             title: 'Despacito Playlist',
-            icon: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&rs=AOn4CLBEbPjZNLOTWKK9IgpBYcBjav7eVw',
+            thumbnail: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&rs=AOn4CLBEbPjZNLOTWKK9IgpBYcBjav7eVw',
             channel_name: 'skassira12',
             channel_url: 'https://www.youtube.com/channel/UC65xgmFhe679BVFdML8ilgA',
             url: 'https://www.youtube.com/playlist?list=PLVKH3RmLAlPgSVRlwh7RfbCGUO4P80i-A',
@@ -149,14 +149,14 @@ Album Command
                 title: 'Luis Fonsi - Despacito ft. Daddy Yankee',
                 url: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk',
                 time: 282,
-                artist_nom: 'Luis Fonsi',
+                artist_name: 'Luis Fonsi',
                 artist_url: 'https://www.youtube.com/channel/UCxoq-PAQeAdk_zyg8YS0JqA',
                 requestor: null,
-                icon: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCuffhiAPaneh-5dnyfyvY_mDwxhQ',
+                thumbnail: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCuffhiAPaneh-5dnyfyvY_mDwxhQ',
                 place: null,
                 format: null,
                 stream_url: null,
-                plateforme: 'Youtube',
+                plateform: 'Youtube',
                 type: 'Track'
                 },
                 ...

@@ -50,12 +50,12 @@ module.exports = async (Arg, tag) => {
         let title = vdatas.videoDetails.title
         let url = `https://www.youtube.com/watch?v=${vdatas.videoDetails.videoId}`
         let time = Number(vdatas.videoDetails.lengthSeconds)
-        let icon = vdatas.videoDetails.thumbnail.thumbnails[0].url
-        let artist_nom = vdatas.videoDetails.author
+        let thumbnail = vdatas.videoDetails.thumbnail.thumbnails[0].url
+        let artist_name = vdatas.videoDetails.author
         let artist_url = `https://www.youtube.com/channel/${vdatas.videoDetails.channelId}`
         let requestor = tag ? tag : null
         let place = null
         let format = [...(vdatas.streamingData.formats ?? []), ...(vdatas.streamingData.adaptiveFormats ?? [])]
-        return resolve(new Track({title, url, time, icon, artist_nom, artist_url, requestor, place, format}))
+        return resolve(new Track({title, url, time, thumbnail, artist_name, artist_url, requestor, place, format}))
     })
 }

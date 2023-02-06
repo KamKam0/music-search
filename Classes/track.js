@@ -1,46 +1,52 @@
 const Base = require("./base")
 class Track extends Base{
-    #plateformeToken;
+    #plateformToken;
     constructor(song){
         super(song)
         this.title = song.title
         this.url = song.url
         this.time = song.time
-        this.artist_nom = song.artist_nom
+        this.artist_name = song.artist_name
         this.artist_url = song.artist_url
         this.requestor = song.requestor
-        this.icon = song.icon
+        this.thumbnail = song.thumbnail
         this.place = song.place
         this.format = song.format ? song.format : null
         this.stream_url = song.stream_url ? song.stream_url : null
         this.type = "Track"
-        this.#plateformeToken = song.token
+        this.#plateformToken = song.token
     }
 
+    /**
+     * @returns {object[]}
+     */
     convertYTB(){
         return new Promise(async (resolve, reject) => {
-            if(this.plateforme === "Youtube") return resolve(this)
+            if(this.plateform === "Youtube") return resolve(this)
             else{
-                require("../Youtube/search")(`${this.title} ${this.artist_nom}`)
+                require("../Youtube/search")(`${this.title} ${this.artist_name}`)
                 .catch(err => reject(err))
                 .then(datas => resolve(datas[0]))
             }
         })
     }
 
+    /**
+     * @returns {string}
+     */
     streamLink(){
         return new Promise(async (resolve, reject) => {
-            if(this.plateforme === "Youtube"){
+            if(this.plateform === "Youtube"){
                 return reject("Unavailable")
             }
-            if(this.plateforme === "Deezer"){
+            if(this.plateform === "Deezer"){
                 return reject("Unavailable")
             }
-            if(this.plateforme === "Spotify"){
+            if(this.plateform === "Spotify"){
                 return reject("Unavailable")
             }
-            if(this.plateforme === "SoundCloud"){
-                require("../SoundCloud/stream")(this.#plateformeToken, this.stream_url)
+            if(this.plateform === "SoundCloud"){
+                require("../SoundCloud/stream")(this.#plateformToken, this.stream_url)
                 .catch(err => reject(err) )
                 .then(datas => resolve(datas))
             }

@@ -32,7 +32,7 @@ module.exports = async (token, Arg, tag) => {
             },
             songs: datas.tracks.items.filter(song => song.track !== null).map(song => {
                 song = song.track
-                if(song) return new Track({title: song.name, url: song.external_urls.spotify, time: Math.round(song.duration_ms / 1000), icon: null, artist_nom: song.artists[0].name, artist_url: song.artists[0].external_urls.spotify, requestor: tag ? tag : null, place: null})
+                if(song) return new Track({title: song.name, url: song.external_urls.spotify, time: Math.round(song.duration_ms / 1000), thumbnail: null, artist_name: song.artists[0].name, artist_url: song.artists[0].external_urls.spotify, requestor: tag ? tag : null, place: null})
                 return undefined
             }).filter(e => e)
         }

@@ -25,12 +25,12 @@ module.exports = async (token, Arg, tag, state) => {
         let title = datas.name
         let url = datas.external_urls.spotify
         let time = Math.round(datas.duration_ms / 1000)
-        let icon = null
-        let artist_nom = datas.artists[0].name
+        let thumbnail = null
+        let artist_name = datas.artists[0].name
         let artist_url = datas.artists[0].external_urls.spotify
         let requestor = tag ? tag : null
         let place = null
-        let track = new Track({title, url, time, icon, artist_nom, artist_url, requestor, place})
+        let track = new Track({title, url, time, thumbnail, artist_name, artist_url, requestor, place})
         if(!state) return resolve(track)
         track.convertYTB()
         .then(e => resolve(e))
