@@ -1,6 +1,6 @@
 {
   "name": "@kamkam1_0/music-search",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,6 @@
   "author": "KamKam <kamkam.dev.contact@gmail.com>",
   "license": "BSD 2",
   "dependencies": {
-    "fs": "^0.0.1-security",
     "node-fetch": "^2.6.7"
   }
 }
