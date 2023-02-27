@@ -4,14 +4,18 @@ const Error = require("../Classes/error")
 /**
  * @param {string} Arg 
  * @param {string} tag 
- * @returns {Playlist|Error}
+ * @returns {Promise<Playlist|Error>}
  */
 module.exports = async (Arg, tag) => {
     return new Promise(async (resolve, reject) => {
         const fetch = require("node-fetch")
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
-        if(Arg.startsWith("https://deezer.page.link")) return reject(new Error("This URL needs to be resolved first", 13))
-        if(!Arg.startsWith("https://www.deezer.com/") || (!Arg.includes("deezer") || !Arg.includes("playlist"))) return reject(new Error("Incorrect URL", 2))
+        if(Arg.startsWith("https://deezer.page.link")) {
+            let resolved = await require("./resolve")(Arg).catch(err => reject(err))
+            Arg = resolved?.link
+            if(!Arg) return
+        }
+        if(!require("./validate")(Arg, "playlist")) return reject(new Error("Incorrect URL", 2))
 
         let ID = Arg.split("/playlist/")[1]
         let datas = await fetch(`https://api.deezer.com/playlist/${ID.includes("?") ? ID.split("?")[0]: ID}`)

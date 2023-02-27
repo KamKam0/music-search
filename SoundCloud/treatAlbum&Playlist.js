@@ -8,11 +8,16 @@ const analyser = require("./analyseDatas")
  * @param {string} token
  * @param {string} Arg 
  * @param {string} tag 
- * @returns {Album|Playlist|Error}
+ * @returns {Promise<Album|Playlist|Error>}
  */
 module.exports = async (token, datas, tag, type) => {
     return new Promise(async (resolve, reject) => {
-        
+        if(datas && typeof datas === "string" && require("./validate")(datas)){
+            let resolved = await require("./resolve")(token, datas).catch(err => reject(err))
+            if(!resolved) return
+            if(resolved.type !== "playlist") return reject(new Error("Incorrect URL", 2))
+            datas = resolved.datas
+        }
         if(!datas || typeof datas !== "object") return reject(new Error("No valid argument given", 1))
         let res = datas.tracks.filter(track => track.title && track.media).map(track =>  new Track({...analyser(track, tag), token}))
 

@@ -8,7 +8,7 @@ class Base{
         this.type = name
         let osSpace = "/"
         if(require("os").platform() === "win32")  osSpace = "\\"
-        this.available = ["track", "resolve", "playlist", "album", "search"].filter(element => fs.readdirSync(require.resolve(`../${this.type}/structure`).split(osSpace + "structure")[0]).find(dispo => dispo.split(".")[0] === element))
+        this.available = ["track", "resolve", "playlist", "album", "search", "validate"].filter(element => fs.readdirSync(require.resolve(`../${this.type}/structure`).split(osSpace + "structure")[0]).find(dispo => dispo.split(".")[0] === element))
     }
 
     /**
@@ -53,6 +53,16 @@ class Base{
             .catch(err => reject(err))
             .then(datas => resolve(datas))
         })
+    }
+
+    /**
+    * 
+    * @param {string} url 
+    * @param {string} [filter]
+    * @returns {boolean}
+    */
+    validateURL(url, filter){
+        return require(`../${this.type}/validate.js`)(url, filter)
     }
 
     /**

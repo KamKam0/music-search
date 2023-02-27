@@ -1,13 +1,13 @@
 const Error = require("../Classes/error")
 /**
  * @param {string} Arg 
- * @returns {Track|Album|Playlist|Error}
+ * @returns {Promise<Track|Album|Playlist|Error>}
  */
 module.exports = async (Arg) => {
     return new Promise(async (resolve, reject) => {
         const fetch = require("node-fetch")
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
-        if(!Arg.startsWith("https://deezer.page.link")) return reject(new Error("Incorrect URL to resolve", 2))
+        if(!require("./validate")(Arg)) return reject(new Error("Incorrect URL to resolve", 2))
 
         let first_data = await fetch(Arg)
         first_data = await first_data.text()

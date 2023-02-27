@@ -1,6 +1,6 @@
 {
   "name": "@kamkam1_0/music-search",
-  "version": "4.0.3",
+  "version": "5.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,13 @@
     "Deezer",
     "Spotify",
     "Soundcloud",
-    "Search"
+    "Search",
+    "Track",
+    "Playlist",
+    "Album",
+    "Resolve",
+    "Validator",
+    "URL"
   ],
   "homepage": "https://github.com/KamKam0/music-search",
   "author": "KamKam <kamkam.dev.contact@gmail.com>",

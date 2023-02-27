@@ -42,12 +42,21 @@ class SoundCloud extends base{
         })
     }
 
-    getStream(url){
+    /**
+     * @param {string} link
+     * @param {object} [format]
+     * @param {string} [format.type]
+     * @param {string} [format.codec]
+     * @param {boolean} [withDetails]
+     * @returns {string|object|Error}
+     */
+    async streamLink(link, format, withDetails){
         return new Promise(async (resolve, reject) => {
-            this._getToken().then(() => {
-                require("./stream")(this._token, url)
-                .catch(err => { return reject(err) })
-                .then(datas => { return resolve(datas) })
+            this._getToken()
+            .then(() => {
+                require("./stream").link(this._token, link, format, withDetails)
+                .catch(err => reject(err) )
+                .then(datas => resolve(datas))
             })
         })
     }

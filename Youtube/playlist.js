@@ -5,13 +5,13 @@ const Error = require("../Classes/error")
  * 
  * @param {string} Arg 
  * @param {string} tag 
- * @returns {Playlist|Error}
+ * @returns {Promise<Playlist|Error>}
  */
 module.exports = async (Arg, tag) => {
     return new Promise(async (resolve, reject) => {
         const fetch = require("node-fetch")
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
-        if((!Arg.includes("youtube") || !Arg.includes("list=")) || (!Arg.includes("/watch?v=") && !Arg.includes("/playlist"))) return reject(new Error("Incorrect URL", 2))
+        if(!require("./validate")(Arg, "playlist")) return reject(new Error("Incorrect URL", 2))
         let ID = Arg.split("list=")[1]
         if(!ID) return reject(new Error("Could not find the ID of the playlist", 3))
         ID.split("&")[0]
@@ -27,7 +27,7 @@ module.exports = async (Arg, tag) => {
         
         const first_datas = JSON.parse(datas.split('var ytInitialData = ')[1].split(';</script>')[0]);
         
-        if(first_datas.alerts) return reject(new Error("Could not find the plyalist", 7))
+        if(!first_datas.alerts) return reject(new Error("Could not find the plyalist", 7))
         
         const playlistDetails = JSON.parse(datas.split('{"playlistSidebarRenderer":')[1].split('}};</script>')[0]).items
         

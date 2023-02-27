@@ -4,7 +4,7 @@ const Error = require("../Classes/error")
  * 
  * @param {string} Arg 
  * @param {string} tag 
- * @returns {object[]|Error}
+ * @returns {Promise<object[]|Error>}
  */
 module.exports = async (Arg, tag) => {
     return new Promise(async (resolve, reject) => {
