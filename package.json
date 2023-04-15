@@ -28,7 +28,7 @@
   ],
   "homepage": "https://github.com/KamKam0/music-search",
   "author": "KamKam <kamkam.dev.contact@gmail.com>",
-  "license": "BSD 2",
+  "license": "ISC",
   "dependencies": {
     "node-fetch": "^2.6.7"
   }
