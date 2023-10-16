@@ -1,3 +1,5 @@
+const availableTypes = ["track", "album", "playlist"]
+
 /**
 * 
 * @param {string} url 
@@ -5,7 +7,7 @@
 * @returns {boolean}
 */
 module.exports = (url, filter) => {
-    if(typeof url !== "string" || !url.includes("https://") || (filter && !["track", "album", "playlist"].includes(filter))) return false
+    if(typeof url !== "string" || !url.includes("https://") || (filter && !availableTypes.includes(filter))) return false
     if(url.startsWith("https://www.")) url = url.split("https://www.")[1]
     else if(url.startsWith("https://")) url = url.split("https://")[1]
     if(!url) return false
@@ -18,12 +20,9 @@ module.exports = (url, filter) => {
 
     url = url.split("/")
 
-    if(url.length !== 2) return false
-    console.log(url)
+    if(!availableTypes.includes(url[1])) return false
 
-    if(!["track", "album", 'playlist'].includes(url[0])) return false
-
-    if(filter && url[0] !== filter) return false
+    if(filter && url[1] !== filter) return false
 
     url = url[1]
 

@@ -9,7 +9,6 @@ module.exports = (url, filter) => {
     if(url.startsWith("https://www.")) url = url.split("https://www.")[1]
     else if(url.startsWith("https://")) url = url.split("https://")[1]
     if(!url) return false
-    
 
     if(!url.startsWith("soundcloud.com/") && !url.startsWith("on.soundcloud.com/")) return false
 
@@ -51,11 +50,15 @@ module.exports = (url, filter) => {
         if(!isNaN(url[0])) return false
     }
 
-    if(filter && url[1].includes("sets")) return false
-
-    if(!url[1].includes("sets") && !url[1].includes("?")) return false
-
-    else if (url[1].includes("sets") && (!url[2] || !url[2].includes("?"))) return false
+    if (url[1].includes('sets')) {
+        if(filter && url[1].includes("sets")) return false
+    
+        if(!url[1].includes("sets") && !url[1].includes("?")) return false
+    
+        else if (url[1].includes("sets") && (!url[2] || !url[2].includes("?"))) return false
+    } else if (url.length !== 2) {
+        return false
+    }
 
     return true
 }
