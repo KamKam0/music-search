@@ -1,7 +1,7 @@
 /**
  * @returns {string}
  */
-exports.version = require("./package.json").version
+exports.version = require("../package.json").version
 const Youtube = require("./Youtube/structure")
 const Spotify = require("./Spotify/structure")
 const SoundCloud = require("./SoundCloud/structure")
@@ -25,4 +25,4 @@ exports.Deezer = Deezer
 /**
  * @returns {object}
  */
-exports.eval = require("./eval")
+exports.eval = require('./utils/eval')
