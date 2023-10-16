@@ -5,11 +5,22 @@ class base{
     }
 
     #getPlatform(){
-        if(this.url.includes("youtube")) return "Youtube"
-        else if(this.url.includes("spotify")) return "Spotify"
-        else if(this.url.includes("soundcloud")) return "SoundCloud"
-        else if(this.url.includes("deezer")) return "Deezer"
-        else return undefined
+        let platform;
+        switch(true) {
+            case(this.url.includes("youtube")):
+                platform = "Youtube"
+            break;
+            case(this.url.includes("spotify")):
+                platform = "Spotify"
+            break;
+            case(this.url.includes("soundcloud")):
+                platform = "SoundCloud"
+            break;
+            case(this.url.includes("deezer")):
+                platform = "Deezer"
+            break;
+        }
+        return platform
     }
 }
 

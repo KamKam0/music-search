@@ -4,23 +4,25 @@ const Error = require("./error")
 const fs = require("node:fs")
 const os = require('node:os')
 
+let osSpace = "/"
+if(os.platform() === "win32")  osSpace = "\\"
+
 class Base{
     constructor(name){
         this.type = name
-        let osSpace = "/"
-        if(os.platform() === "win32")  osSpace = "\\"
-        this.available = ["track", "resolve", "playlist", "album", "search", "validate"].filter(element => fs.readdirSync(require.resolve(`../${this.type}/structure`).split(osSpace + "structure")[0]).find(dispo => dispo.split(".")[0] === element))
+
+        this.available = ["track", "resolve", "playlist", "album", "search", "validate"]
+        .filter(element => fs.readdirSync(require.resolve(`../${this.type}/structure`).split(osSpace + "structure")[0]).find(dispo => dispo.split(".")[0] === element))
     }
 
     /**
      * 
      * @param {string} Arg 
-     * @param {string} tag 
      * @returns {Track}
      */
-    getTrack(Arg, tag, state){
+    getTrack(Arg, state){
         return new Promise(async (resolve, reject) => {
-            this._requestMaker("track", Arg, tag, state)
+            this._requestMaker("track", Arg, state)
             .catch(err => reject(err))
             .then(datas => resolve(datas))
         })
@@ -29,12 +31,11 @@ class Base{
     /**
      * 
      * @param {string} Arg 
-     * @param {string} tag 
      * @returns {Playlist}
      */
-    getPlaylist(Arg, tag){
+    getPlaylist(Arg){
         return new Promise(async (resolve, reject) => {
-            this._requestMaker("playlist", Arg, tag)
+            this._requestMaker("playlist", Arg)
             .catch(err => reject(err))
             .then(datas => resolve(datas))
         })
@@ -44,13 +45,12 @@ class Base{
      * 
      * @param {string} type 
      * @param {string} Arg 
-     * @param {string} tag 
      * @returns {Track|Playlist|Album}
      */
-    get(type, Arg, tag){
+    get(type, Arg){
         return new Promise(async (resolve, reject) => {
             if(!this.available.includes(type)) return reject(new Error("Invalid type of research", 15))
-            this._requestMaker(type, Arg, tag)
+            this._requestMaker(type, Arg)
             .catch(err => reject(err))
             .then(datas => resolve(datas))
         })
@@ -70,16 +70,15 @@ class Base{
      * @private
      * @param {string} type 
      * @param {string} arg 
-     * @param {string} tag 
      * @param {boolean} state 
      * @returns 
      */
-    _requestMaker(type, arg, tag, state){
+    _requestMaker(type, arg, state){
         return new Promise(async (resolve, reject) => {
             this._getToken()
             .then(() => {
-                if(this._token) require(`../${this.type}/${type}`)(this._token, arg, tag, state).catch(err => reject(err)).then(datas => resolve(datas))
-                else require(`../${this.type}/${type}`)(arg, tag, state).catch(err => reject(err)).then(datas => resolve(datas))
+                if(this._token) require(`../${this.type}/${type}`)(this._token, arg, state).catch(err => reject(err)).then(datas => resolve(datas))
+                else require(`../${this.type}/${type}`)(arg, state).catch(err => reject(err)).then(datas => resolve(datas))
             }).catch(err => {})
         })
     }

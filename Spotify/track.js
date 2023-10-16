@@ -6,11 +6,10 @@ const validate = require("./validate")
 /**
  * @param {string} token 
  * @param {string} Arg 
- * @param {string} tag 
  * @param {boolean} state 
  * @returns {Promise<Track|Error>}
  */
-module.exports = async (token, Arg, tag, state) => {
+module.exports = async (token, Arg, state) => {
     return new Promise(async (resolve, reject) => {
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
         if(!validate(Arg, "track")) return reject(new Error("Incorrect URL", 2))
@@ -30,9 +29,7 @@ module.exports = async (token, Arg, tag, state) => {
         let thumbnail = null
         let artist_name = datas.artists[0].name
         let artist_url = datas.artists[0].external_urls.spotify
-        let requestor = tag ? tag : null
-        let place = null
-        let track = new Track({title, url, time, thumbnail, artist_name, artist_url, requestor, place})
+        let track = new Track({title, url, time, thumbnail, artist_name, artist_url})
         if(!state) return resolve(track)
         track.convertYTB()
         .then(e => resolve(e))

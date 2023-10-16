@@ -59,9 +59,7 @@ Track Command
         time: 282,
         artist_name: 'LuisFonsiVEVO',
         artist_url: 'https://www.youtube.com/channel/UCLp8RBhQHu9wSsq62j_Md6A',
-        requestor: null,
         thumbnail: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCuffhiAPaneh-5dnyfyvY_mDwxhQ',
-        place: null,
         plateform: 'Youtube',
         type: 'Track'
     */
@@ -85,9 +83,7 @@ Playlist Command
                 time: 282,
                 artist_name: 'Luis Fonsi',
                 artist_url: 'https://www.youtube.com/channel/UCxoq-PAQeAdk_zyg8YS0JqA',
-                requestor: null,
                 thumbnail: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCuffhiAPaneh-5dnyfyvY_mDwxhQ',
-                place: null,
                 plateform: 'Youtube',
                 type: 'Track'
                 },
@@ -115,9 +111,7 @@ Album Command
                 time: 282,
                 artist_name: 'Luis Fonsi',
                 artist_url: 'https://www.youtube.com/channel/UCxoq-PAQeAdk_zyg8YS0JqA',
-                requestor: null,
                 thumbnail: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCuffhiAPaneh-5dnyfyvY_mDwxhQ',
-                place: null,
                 plateform: 'Youtube',
                 type: 'Track'
                 },
@@ -143,9 +137,7 @@ Youtube Search
             time: 282,
             artist_name: 'Luis Fonsi',
             artist_url: 'https://www.youtube.com/channel/UCxoq-PAQeAdk_zyg8YS0JqA',
-            requestor: null,
             thumbnail: 'https://i.ytimg.com/vi/kJQP7kiw5Fk/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBCg9eudi8DoM9M-qjPgJBGGkuIgA',
-            place: null,
             plateform: 'Youtube',
             type: 'Track'
         },
@@ -155,9 +147,7 @@ Youtube Search
             time: 241,
             artist_name: 'Taz Network',
             artist_url: 'https://www.youtube.com/channel/UCJ6ERWrxZzb9Ua3oeRcIe0g',
-            requestor: null,
             thumbnail: 'https://i.ytimg.com/vi/gm3-m2CFVWM/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBdnMRJ4yJ6vHumS_nU46yxFLqRjQ',
-            place: null,
             plateform: 'Youtube',
             type: 'Track'
         },

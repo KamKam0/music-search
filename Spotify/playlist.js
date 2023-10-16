@@ -7,10 +7,9 @@ const validate = require("./validate")
 /**
  * @param {string} token
  * @param {string} Arg 
- * @param {string} tag 
  * @returns {Promise<Playlist|Error>}
  */
-module.exports = async (token, Arg, tag) => {
+module.exports = async (token, Arg) => {
     return new Promise(async (resolve, reject) => {
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
         if(!validate(Arg, "playlist")) return reject(new Error("Incorrect URL", 2))
@@ -34,9 +33,9 @@ module.exports = async (token, Arg, tag) => {
             },
             songs: datas.tracks.items.filter(song => song.track !== null).map(song => {
                 song = song.track
-                if(song) return new Track({title: song.name, url: song.external_urls.spotify, time: Math.round(song.duration_ms / 1000), thumbnail: null, artist_name: song.artists[0].name, artist_url: song.artists[0].external_urls.spotify, requestor: tag ? tag : null, place: null})
+                if(song) return new Track({title: song.name, url: song.external_urls.spotify, time: Math.round(song.duration_ms / 1000), thumbnail: null, artist_name: song.artists[0].name, artist_url: song.artists[0].external_urls.spotify})
                 return undefined
-            }).filter(e => e)
+            }).filter(Boolean)
         }
         
         return resolve(new Playlist(result))

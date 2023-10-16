@@ -7,10 +7,9 @@ const resolver = require("./resolve")
 /**
  * 
  * @param {string} Arg 
- * @param {string} tag 
  * @returns {Promise<Track|Error>}
  */
-module.exports = async (token, Arg, tag) => {
+module.exports = async (token, Arg) => {
     return new Promise(async (resolve, reject) => {
         if(Arg && typeof Arg === "string" && validate(Arg)){
             let resolved = await resolver(token, Arg).catch(err => reject(err))
@@ -19,6 +18,6 @@ module.exports = async (token, Arg, tag) => {
             Arg = resolved.datas
         }
         if(!Arg || typeof Arg !== "object") return reject(new Error("No valid argument given", 1))
-        return resolve(new Track(analyser(Arg, tag)))
+        return resolve(new Track(analyser(Arg)))
     })
 }

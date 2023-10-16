@@ -1,5 +1,5 @@
 const Base = require("./base")
-const youtubeSearch = require("../Youtube/search")
+
 class Track extends Base{
     constructor(song){
         super(song)
@@ -8,20 +8,18 @@ class Track extends Base{
         this.time = song.time
         this.artist_name = song.artist_name
         this.artist_url = song.artist_url
-        this.requestor = song.requestor
         this.thumbnail = song.thumbnail
-        this.place = song.place
         this.type = "Track"
     }
 
     /**
-     * @returns {object[]}
+     * @returns {Track}
      */
     convertYTB(){
         return new Promise(async (resolve, reject) => {
             if(this.plateform === "Youtube") return resolve(this)
             else{
-                youtubeSearch(`${this.title} ${this.artist_name}`)
+                require("../Youtube/search")(`${this.title} ${this.artist_name}`)
                 .catch(err => reject(err))
                 .then(datas => resolve(datas[0]))
             }

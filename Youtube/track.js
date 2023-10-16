@@ -8,10 +8,9 @@ const validate = require("./validate")
 /**
  * 
  * @param {string} Arg 
- * @param {string} tag 
  * @returns {Promise<Track|Error>}
  */
-module.exports = async (Arg, tag, state) => {
+module.exports = async (Arg, state) => {
     return new Promise(async (resolve, reject) => {
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
         if(!validate(Arg, "track")) return reject(new Error("Incorrect URL", 2))
@@ -80,9 +79,7 @@ module.exports = async (Arg, tag, state) => {
         let thumbnail = vdatas.videoDetails.thumbnail.thumbnails[0].url
         let artist_name = vdatas.videoDetails.author
         let artist_url = `https://www.youtube.com/channel/${vdatas.videoDetails.channelId}`
-        let requestor = tag ? tag : null
-        let place = null
-        return resolve(new Track({title, url, time, thumbnail, artist_name, artist_url, requestor, place}))
+        return resolve(new Track({title, url, time, thumbnail, artist_name, artist_url}))
     })
 }
 
@@ -191,7 +188,6 @@ exports.extractFunctions = body => {
    * @returns {string}
   */
   function cutAfterJS (mixedJson){
-    // Define the general open and closing tag
     let open, close;
     if (mixedJson[0] === '[') {
       open = '[';

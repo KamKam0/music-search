@@ -5,10 +5,9 @@ const fetch = require("node-fetch")
 /**
  * 
  * @param {string} Arg 
- * @param {string} tag 
  * @returns {Promise<object[]|Error>}
  */
-module.exports = async (Arg, tag) => {
+module.exports = async (Arg) => {
     return new Promise(async (resolve, reject) => {
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
         let datas = await fetch(`https://www.youtube.com/results?search_query=${Arg}&sp=EgIQAQ%253D%253D`, {
@@ -46,9 +45,9 @@ module.exports = async (Arg, tag) => {
         
         details = details.map(song => {
             if(song) song = song.videoRenderer; 
-            if(song) return new Track({title: song.title.runs[0].text, url: `https://www.youtube.com/watch?v=${song.videoId}`, time: Number(`${(Number(song.lengthText.simpleText.split(":")[0]) * 60) + Number(song.lengthText.simpleText.split(":")[1])}`), thumbnail: song.thumbnail.thumbnails[0].url, artist_name: song.ownerText.runs[0].text, artist_url: `https://www.youtube.com/channel/${song.ownerText.runs[0].navigationEndpoint.browseEndpoint.browseId}`, requestor: tag ? tag : null, place: null})
+            if(song) return new Track({title: song.title.runs[0].text, url: `https://www.youtube.com/watch?v=${song.videoId}`, time: Number(`${(Number(song.lengthText.simpleText.split(":")[0]) * 60) + Number(song.lengthText.simpleText.split(":")[1])}`), thumbnail: song.thumbnail.thumbnails[0].url, artist_name: song.ownerText.runs[0].text, artist_url: `https://www.youtube.com/channel/${song.ownerText.runs[0].navigationEndpoint.browseEndpoint.browseId}`})
             return undefined
-        }).filter(e => e)
+        }).filter(Boolean)
         
         if(!details[0]) return reject(new Error("Could not find videos", 4))
         return resolve(details)

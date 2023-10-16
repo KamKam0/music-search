@@ -1,6 +1,6 @@
 const base = require("../Classes/baseStructure")
 const search = require("./search")
-const stream = require('./stream')
+const streamResolver = require('./stream')
 
 class Youtube extends base{
     constructor(){
@@ -10,12 +10,11 @@ class Youtube extends base{
     /**
      * 
      * @param {string} Arg 
-     * @param {string} tag 
      * @returns {object[]}
      */
-    search(Arg, tag){
+    search(Arg){
         return new Promise(async (resolve, reject) => {
-            search( Arg, tag)
+            search( Arg)
             .catch(err => reject(err) )
             .then(datas => resolve(datas) )
         })
@@ -31,7 +30,7 @@ class Youtube extends base{
      */
     async streamLink(link, format, withDetails){
         return new Promise(async (resolve, reject) => {
-            stream.link(link, format, withDetails)
+            streamResolver.link(link, format, withDetails)
             .catch(err => reject(err) )
             .then(datas => resolve(datas))
         })

@@ -7,10 +7,9 @@ const fetch = require("node-fetch")
 /**
  * 
  * @param {string} Arg 
- * @param {string} tag 
  * @returns {Promise<Playlist|Error>}
  */
-module.exports = async (Arg, tag) => {
+module.exports = async (Arg) => {
     return new Promise(async (resolve, reject) => {
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
         if(!validate(Arg, "playlist")) return reject(new Error("Incorrect URL", 2))
@@ -29,7 +28,7 @@ module.exports = async (Arg, tag) => {
         
         const first_datas = JSON.parse(datas.split('var ytInitialData = ')[1].split(';</script>')[0]);
         
-        if(!first_datas.alerts) return reject(new Error("Could not find the plyalist", 7))
+        if(!first_datas.sidebar) return reject(new Error("Could not find the plyalist", 7))
         
         const playlistDetails = JSON.parse(datas.split('{"playlistSidebarRenderer":')[1].split('}};</script>')[0]).items
         
@@ -44,12 +43,10 @@ module.exports = async (Arg, tag) => {
                 let thumbnail = music.thumbnail.thumbnails[0].url
                 let artist_name = music.shortBylineText.runs[0].text
                 let artist_url = `https://www.youtube.com/channel/${music.shortBylineText.runs[0].navigationEndpoint.browseEndpoint.browseId}`
-                let requestor = tag ? tag : null
-                let place = null
-                return new Track({title, url, time, thumbnail, artist_name, artist_url, requestor, place})
+                return new Track({title, url, time, thumbnail, artist_name, artist_url})
             }
             return undefined
-        }).filter(e => e)
+        }).filter(Boolean)
         let result = {
             list: {
                 title: playlistDetails[0].playlistSidebarPrimaryInfoRenderer.title.runs[0].text,

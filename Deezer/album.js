@@ -4,12 +4,12 @@ const Error = require("../Classes/error")
 const validate = require("./validate")
 const fetch = require("node-fetch")
 const resolver = require("./resolve")
+
 /**
  * @param {string} Arg 
- * @param {string} tag 
  * @returns {Promise<Album|Error>}
  */
-module.exports = async (Arg, tag) => {
+module.exports = async (Arg) => {
     return new Promise(async (resolve, reject) => {
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
         if(Arg.startsWith("https://deezer.page.link")) {
@@ -40,9 +40,7 @@ module.exports = async (Arg, tag) => {
                 let thumbnail = `https://e-cdns-images.dzcdn.net/images/cover/${song.md5_image}/250x250-000000-80-0-0.jpg`
                 let artist_name = song.artist.name
                 let artist_url = `https://www.deezer.com/fr/artist/${datas.artist.id}`
-                let requestor = tag ? tag : null
-                let place = null
-                return new Track({title, url, time, thumbnail, artist_name, artist_url, requestor, place})
+                return new Track({title, url, time, thumbnail, artist_name, artist_url})
             })
         }
         return resolve(new Album(result))

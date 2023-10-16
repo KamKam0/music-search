@@ -6,10 +6,9 @@ const resolver = require("./resolve")
 /**
  * 
  * @param {string} Arg 
- * @param {string} tag 
  * @returns {Promise<Track|Error>}
  */
-module.exports = async (Arg, tag, state) => {
+module.exports = async (Arg, state) => {
     return new Promise(async (resolve, reject) => {
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
         if(Arg.startsWith("https://deezer.page.link")) {
@@ -31,9 +30,7 @@ module.exports = async (Arg, tag, state) => {
         let thumbnail = `https://e-cdns-images.dzcdn.net/images/cover/${datas.md5_image}/250x250-000000-80-0-0.jpg`
         let artist_name = datas.artist.name
         let artist_url = datas.artist.link
-        let requestor = tag ? tag : null
-        let place = null
-        let track = new Track({title, url, time, thumbnail, artist_name, artist_url, requestor, place})
+        let track = new Track({title, url, time, thumbnail, artist_name, artist_url})
         if(!state) return resolve(track)
         track.convertYTB()
         .then(e => resolve(e))
