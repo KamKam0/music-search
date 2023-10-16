@@ -1,4 +1,6 @@
 const base = require("../Classes/baseStrucRes")
+const fetch = require("node-fetch")
+const stream = require("./stream")
 
 class SoundCloud extends base{
     constructor(){
@@ -22,7 +24,6 @@ class SoundCloud extends base{
     _getToken(){
         return new Promise(async (resolve, reject) => {
             if((Date.now() - Number(this._timestamp)) >= (1000 * 60 * 60)){
-                const fetch = require("node-fetch")
                 fetch("https://soundcloud.com/").then(async res => {
                     res = await res.text()
                     res = String(res).split('</script>')
@@ -54,7 +55,7 @@ class SoundCloud extends base{
         return new Promise(async (resolve, reject) => {
             this._getToken()
             .then(() => {
-                require("./stream").link(this._token, link, format, withDetails)
+                stream.link(this._token, link, format, withDetails)
                 .catch(err => reject(err) )
                 .then(datas => resolve(datas))
             })

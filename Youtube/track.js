@@ -2,6 +2,9 @@ const Track = require("../Classes/track")
 const Error = require("../Classes/error")
 const vm = require("node:vm")
 const querystring = require("node:querystring")
+const fetch = require("node-fetch")
+const validate = require("./validate")
+
 /**
  * 
  * @param {string} Arg 
@@ -10,9 +13,8 @@ const querystring = require("node:querystring")
  */
 module.exports = async (Arg, tag, state) => {
     return new Promise(async (resolve, reject) => {
-        const fetch = require("node-fetch")
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
-        if(!require("./validate")(Arg, "track")) return reject(new Error("Incorrect URL", 2))
+        if(!validate(Arg, "track")) return reject(new Error("Incorrect URL", 2))
         if(Arg.includes("/watch?v=")) var ID = Arg.split("/watch?v=")[1]
         else var ID = Arg.split(".be/")[1]
         if(!ID) return reject(new Error("Could not find the ID of the track", 8))

@@ -1,5 +1,7 @@
 const Error = require("../Classes/error")
 const fetch = require("node-fetch");
+const streamResolver = require("./resolve")
+const validate = require("./validate")
 /**
  * 
  * @param {string} token 
@@ -11,8 +13,8 @@ const fetch = require("node-fetch");
 module.exports.link = async (token, stream_url, format, withDetails) => {
     return new Promise(async (resolve, reject) => {
         if(!stream_url) return reject(new Error("Incorrect URL", 2))
-        if(!require("./validate")(stream_url))  return reject(new Error("Incorrect URL", 2))
-        require("./resolve")(token, stream_url)
+        if(!validate(stream_url))  return reject(new Error("Incorrect URL", 2))
+        streamResolver(token, stream_url)
         .then(async song => {
             if(song.type !== "track") return reject(new Error("The link does not redirect to a song but to a "+song.type, 3))
             let datas = song.datas

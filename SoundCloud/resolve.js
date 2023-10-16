@@ -2,6 +2,9 @@ const Track = require("../Classes/track")
 const Album = require("../Classes/album")
 const Playlist = require("../Classes/playlist")
 const Error = require("../Classes/error")
+const fetch = require("node-fetch")
+const validate = require("./validate")
+
 /**
  * @param {string} token
  * @param {string} Arg 
@@ -9,10 +12,9 @@ const Error = require("../Classes/error")
  */
 module.exports = async (token, Arg) => {
     return new Promise(async (resolve, reject) => {
-        const fetch = require("node-fetch")
 
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
-        if(!require("./validate")(Arg)) return reject(new Error("Incorrect URL", 2))
+        if(!validate(Arg)) return reject(new Error("Incorrect URL", 2))
 
         if(Arg.includes("on.soundcloud.com")){
             let datas = await fetch(Arg)

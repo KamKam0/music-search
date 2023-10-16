@@ -2,12 +2,13 @@ const Playlist = require("./playlist")
 const Track = require("./track")
 const Error = require("./error")
 const fs = require("node:fs")
+const os = require('node:os')
 
 class Base{
     constructor(name){
         this.type = name
         let osSpace = "/"
-        if(require("os").platform() === "win32")  osSpace = "\\"
+        if(os.platform() === "win32")  osSpace = "\\"
         this.available = ["track", "resolve", "playlist", "album", "search", "validate"].filter(element => fs.readdirSync(require.resolve(`../${this.type}/structure`).split(osSpace + "structure")[0]).find(dispo => dispo.split(".")[0] === element))
     }
 

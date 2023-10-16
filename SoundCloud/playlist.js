@@ -1,4 +1,5 @@
 const Playlist = require("../Classes/playlist")
+const analyseAlbumAndPlaylist = require("./treatAlbum&Playlist")
 /**
  * @param {string} token
  * @param {string} Arg 
@@ -7,7 +8,7 @@ const Playlist = require("../Classes/playlist")
  */
 module.exports = async (token, datas, tag) => {
     return new Promise(async (resolve, reject) => {
-        require("./treatAlbum&Playlist")(token, datas, tag, "playlist")
+        analyseAlbumAndPlaylist(token, datas, tag, "playlist")
         .then(e => resolve(e))
         .catch(e => reject(e))
     })

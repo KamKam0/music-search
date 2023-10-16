@@ -1,6 +1,9 @@
 const Track = require("../Classes/track")
 const Playlist = require("../Classes/playlist")
 const Error = require("../Classes/error")
+const validate = require('./validate')
+const fetch = require("node-fetch")
+
 /**
  * 
  * @param {string} Arg 
@@ -9,9 +12,8 @@ const Error = require("../Classes/error")
  */
 module.exports = async (Arg, tag) => {
     return new Promise(async (resolve, reject) => {
-        const fetch = require("node-fetch")
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
-        if(!require("./validate")(Arg, "playlist")) return reject(new Error("Incorrect URL", 2))
+        if(!validate(Arg, "playlist")) return reject(new Error("Incorrect URL", 2))
         let ID = Arg.split("list=")[1]
         if(!ID) return reject(new Error("Could not find the ID of the playlist", 3))
         ID.split("&")[0]

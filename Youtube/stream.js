@@ -1,4 +1,7 @@
 const Error = require("../Classes/error")
+const track = require("./track")
+const validate = require("./validate")
+
 /**
  * @param {string} stream_url 
  * @param {object} [format]
@@ -11,8 +14,8 @@ module.exports.link = async (stream_url, format, withDetails) => {
         if(!format) format = false
         else if(typeof format !== "object" || typeof format.codec !== "string" || typeof format.type !== "string") format = false
         if(typeof withDetails !== "boolean") withDetails = false
-        if(!require("./validate")(stream_url))  return reject(new Error("Incorrect URL", 2))
-        require("./track")(stream_url, null, {platform: "youtube", link: "stream"})
+        if(!validate(stream_url))  return reject(new Error("Incorrect URL", 2))
+        track(stream_url, null, {platform: "youtube", link: "stream"})
         .then(links => {
             if(!format) return resolve(links)
             let link = links.find(e => e.mimeType.startsWith(format.type) && e.mimeType.includes(format.codec))

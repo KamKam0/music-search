@@ -1,6 +1,9 @@
 const Track = require("../Classes/track")
 const Error = require("../Classes/error")
 const analyser = require("./analyseDatas")
+const validate = require("./validate")
+const resolver = require("./resolve")
+
 /**
  * 
  * @param {string} Arg 
@@ -9,8 +12,8 @@ const analyser = require("./analyseDatas")
  */
 module.exports = async (token, Arg, tag) => {
     return new Promise(async (resolve, reject) => {
-        if(Arg && typeof Arg === "string" && require("./validate")(Arg)){
-            let resolved = await require("./resolve")(token, Arg).catch(err => reject(err))
+        if(Arg && typeof Arg === "string" && validate(Arg)){
+            let resolved = await resolver(token, Arg).catch(err => reject(err))
             if(!resolved) return
             if(resolved.type !== "track") return reject(new Error("Incorrect URL", 2))
             Arg = resolved.datas

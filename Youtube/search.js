@@ -1,5 +1,7 @@
 const Track = require("../Classes/track")
 const Error = require("../Classes/error")
+const fetch = require("node-fetch")
+
 /**
  * 
  * @param {string} Arg 
@@ -8,7 +10,6 @@ const Error = require("../Classes/error")
  */
 module.exports = async (Arg, tag) => {
     return new Promise(async (resolve, reject) => {
-        const fetch = require("node-fetch")
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
         let datas = await fetch(`https://www.youtube.com/results?search_query=${Arg}&sp=EgIQAQ%253D%253D`, {
             headers: {

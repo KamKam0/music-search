@@ -4,6 +4,8 @@ const Playlist = require("../Classes/playlist")
 const Error = require("../Classes/error")
 const fetch = require("node-fetch")
 const analyser = require("./analyseDatas")
+const validate = require("./validate")
+const resolver = require("./resolve")
 /**
  * @param {string} token
  * @param {string} Arg 
@@ -12,8 +14,8 @@ const analyser = require("./analyseDatas")
  */
 module.exports = async (token, datas, tag, type) => {
     return new Promise(async (resolve, reject) => {
-        if(datas && typeof datas === "string" && require("./validate")(datas)){
-            let resolved = await require("./resolve")(token, datas).catch(err => reject(err))
+        if(datas && typeof datas === "string" && validate(datas)){
+            let resolved = await resolver(token, datas).catch(err => reject(err))
             if(!resolved) return
             if(resolved.type !== "playlist") return reject(new Error("Incorrect URL", 2))
             datas = resolved.datas

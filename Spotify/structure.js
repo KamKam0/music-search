@@ -1,4 +1,5 @@
 const base = require("../Classes/baseStrucAl")
+const fetch = require("node-fetch")
 
 class Spotify extends base{
     constructor(client_id, client_secret){
@@ -42,7 +43,6 @@ class Spotify extends base{
                     method: "POST",
                     json: true
                 }
-                const fetch = require("node-fetch")
                 let datas = await fetch("https://accounts.spotify.com/api/token", opts)
                 datas = await datas.json()
                 let token = datas.access_token

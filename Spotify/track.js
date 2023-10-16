@@ -1,5 +1,8 @@
 const Track = require("../Classes/track")
 const Error = require("../Classes/error")
+const fetch = require("node-fetch")
+const validate = require("./validate")
+
 /**
  * @param {string} token 
  * @param {string} Arg 
@@ -9,9 +12,8 @@ const Error = require("../Classes/error")
  */
 module.exports = async (token, Arg, tag, state) => {
     return new Promise(async (resolve, reject) => {
-        const fetch = require("node-fetch")
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
-        if(!require("./validate")(Arg, "track")) return reject(new Error("Incorrect URL", 2))
+        if(!validate(Arg, "track")) return reject(new Error("Incorrect URL", 2))
         let base = Arg.split("track/")[1]
         let datas = await fetch(`https://api.spotify.com/v1/tracks/${base.includes("?") ? base.split("?")[0]: base}`, {
             headers: {

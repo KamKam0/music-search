@@ -1,6 +1,9 @@
 const Album = require("../Classes/album")
 const Track = require("../Classes/track")
 const Error = require("../Classes/error")
+const validate = require("./validate")
+const fetch = require("node-fetch")
+const resolver = require("./resolve")
 /**
  * @param {string} Arg 
  * @param {string} tag 
@@ -8,14 +11,13 @@ const Error = require("../Classes/error")
  */
 module.exports = async (Arg, tag) => {
     return new Promise(async (resolve, reject) => {
-        const fetch = require("node-fetch")
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
         if(Arg.startsWith("https://deezer.page.link")) {
-            let resolved = await require("./resolve")(Arg).catch(err => reject(err))
+            let resolved = await resolver(Arg).catch(err => reject(err))
             Arg = resolved?.link
             if(!Arg) return
         }
-        if(!require("./validate")(Arg, "album")) return reject(new Error("Incorrect URL", 2))
+        if(!validate(Arg, "album")) return reject(new Error("Incorrect URL", 2))
 
         let ID = Arg.split("/album/")[1]
         let datas = await fetch(`https://api.deezer.com/album/${ID.includes("?") ? ID.split("?")[0]: ID}`)
