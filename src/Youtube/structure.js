@@ -41,8 +41,9 @@ class Youtube extends base{
      * @param {string} link
      * @returns {Buffer}
      */
-    async steam(link){
+    async stream(link){
         return new Promise(async (resolve, reject) => {
+            return resolve('Function not handled yet')
             streamDownloader(link)
             .catch(err => reject(err) )
             .then(datas => resolve(datas))

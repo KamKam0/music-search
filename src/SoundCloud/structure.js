@@ -69,6 +69,7 @@ class SoundCloud extends base{
      */
     async stream(link){
         return new Promise(async (resolve, reject) => {
+            return resolve('Function not handled yet')
             streamDownloader(link)
             .catch(err => reject(err) )
             .then(datas => resolve(datas))
