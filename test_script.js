@@ -4,7 +4,7 @@ const moduleIndex = require('./src/index')
 const youtube = new moduleIndex.Youtube()
 const soundcloud = new moduleIndex.SoundCloud()
 const deezer = new moduleIndex.Deezer()
-const spotify = new moduleIndex.Spotify('9e492df2fdb54f4d9d04d6150de0f916', '4f67421f06b646d5a5ed9d547eaea56c')
+const spotify = new moduleIndex.Spotify('CLIENT_ID', 'CLIENT_SECRET')
 
 // Youtube tests
 console.log('Youtube tests')
