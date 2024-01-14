@@ -5,7 +5,7 @@
 * @returns {boolean}
 */
 module.exports = (url, filter) => {
-    if(typeof url !== "string" || !url.includes("https://") || (filter && !["track", "album", "playlist"].includes(filter))) return false
+    if(typeof url !== "string" || !url.includes("https://") || (filter && !["track", "playlist"].includes(filter))) return false
     if(url.startsWith("https://www.")) url = url.split("https://www.")[1]
     else if(url.startsWith("https://")) url = url.split("https://")[1]
     if(!url) return false
