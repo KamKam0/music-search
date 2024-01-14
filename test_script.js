@@ -43,7 +43,7 @@ youtube.getTrack('https://www.youtube.com/watch?v=kJQP7kiw5Fk')
     console.log()
 })
 
-youtube.getPlaylist('https://www.youtube.com/watch?v=Y1prccQWlxY')
+youtube.getPlaylist('https://www.youtube.com/playlist?list=PLxI6IWh7Z6bqIMMIzWyVMcgrfEj6K43i5')
 .then(data => {
     console.log('getPlaylistPositiveTest')
     console.log(data)
