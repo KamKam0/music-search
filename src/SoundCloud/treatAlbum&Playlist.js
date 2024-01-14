@@ -20,14 +20,31 @@ module.exports = async (token, datas, type) => {
             datas = resolved.datas
         }
         if(!datas || typeof datas !== "object") return reject(new Error("No valid argument given", 1))
-        let res = datas.tracks.filter(track => track.title && track.media).map(track =>  new Track({...analyser(track), token}))
+        let res = datas.tracks.filter(track => track.title && track.media)
+
+        if (res.length) {
+            res = res.map(track =>  new Track({...analyser(track), token}))
+        }
 
         let to_search = datas.tracks.filter(track => !track.title || !track.media)
 
-        if(to_search[0]){
-            var restmusic = await fetch(`https://api-v2.soundcloud.com/tracks?ids=${to_search.map(track => track.id).toString()}&client_id=${token}`)
-            restmusic = await restmusic.json()
-            res.push(...restmusic.map(track =>  new Track({...analyser(track), token})))
+        if(to_search.length){
+            if (to_search.length > 50) {
+                to_search = to_search.map(track => track.id)
+                let allIds = []
+                while(to_search.length > 50) {
+                    allIds.push(to_search.slice(0, 49))
+                    to_search = to_search.slice(49, to_search.length - 1)
+                }
+                allIds.push(to_search)
+                let requests = await Promise.all(allIds.map(ids => fetch(`https://api-v2.soundcloud.com/tracks?ids=${ids.toString()}&client_id=${token}`)))
+                let jsonRequest = await Promise.all(requests.map(request => request.json()))
+                res.push(...jsonRequest.flat().map(track =>  new Track({...analyser(track), token})))
+            } else {
+                var restmusic = await fetch(`https://api-v2.soundcloud.com/tracks?ids=${to_search.map(track => track.id).slice(0, 50).toString()}&client_id=${token}`)
+                restmusic = await restmusic.json()
+                res.push(...restmusic.map(track =>  new Track({...analyser(track), token})))
+            }
         }
         
         let result = {
