@@ -32,21 +32,25 @@ module.exports = async (Arg) => {
         
         const playlistDetails = JSON.parse(datas.split('{"playlistSidebarRenderer":')[1].split('}};</script>')[0]).items
         
-        const videos = JSON.parse(`${datas.split('{"playlistVideoListRenderer":{"contents":')[1].split('}],"playlistId"')[0]}}]`);
+        let rawVideos = JSON.parse(`${datas.split('{"playlistVideoListRenderer":{"contents":')[1].split('}],"playlistId"')[0]}}]`);
         
-        videos.map(async music =>{
+        let songs = rawVideos
+        .map(music =>{
             music = music.playlistVideoRenderer
-            if(music && music.lengthSeconds){
-                let title = music.title.runs[0].text
-                let url = `https://www.youtube.com/watch?v=${music.videoId}`
-                let time = Number(music.lengthSeconds)
-                let thumbnail = music.thumbnail.thumbnails[0].url
-                let artist_name = music.shortBylineText.runs[0].text
-                let artist_url = `https://www.youtube.com/channel/${music.shortBylineText.runs[0].navigationEndpoint.browseEndpoint.browseId}`
-                return new Track({title, url, time, thumbnail, artist_name, artist_url})
+            if (!music || !music.lengthSeconds) {
+                return undefined
             }
-            return undefined
-        }).filter(Boolean)
+
+            let title = music.title.runs[0].text
+            let url = `https://www.youtube.com/watch?v=${music.videoId}`
+            let time = Number(music.lengthSeconds)
+            let thumbnail = music.thumbnail.thumbnails[0].url
+            let artist_name = music.shortBylineText.runs[0].text
+            let artist_url = `https://www.youtube.com/channel/${music.shortBylineText.runs[0].navigationEndpoint.browseEndpoint.browseId}`
+            return new Track({title, url, time, thumbnail, artist_name, artist_url})
+        })
+        .filter(Boolean)
+
         let result = {
             list: {
                 title: playlistDetails[0].playlistSidebarPrimaryInfoRenderer.title.runs[0].text,
@@ -55,7 +59,7 @@ module.exports = async (Arg) => {
                 channel_url: `https://www.youtube.com/channel/${playlistDetails[1].playlistSidebarSecondaryInfoRenderer.videoOwner.videoOwnerRenderer.title.runs[0].navigationEndpoint.browseEndpoint.browseId}`,
                 url: `https://www.youtube.com/playlist?list=${playlistDetails[0].playlistSidebarPrimaryInfoRenderer.title.runs[0].navigationEndpoint.watchEndpoint.playlistId}`
             },
-            songs: videos
+            songs
         }
         
         return resolve(new Playlist(result))
