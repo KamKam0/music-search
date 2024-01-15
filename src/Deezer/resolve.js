@@ -10,8 +10,13 @@ module.exports = async (Arg) => {
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
         if(!validate(Arg)) return reject(new Error("Incorrect URL to resolve", 2))
 
-        let first_data = await fetch(Arg)
-        first_data = await first_data.text()
+        let first_data;
+        try {
+            first_data = await fetch(Arg)
+            first_data = await first_data.text()
+        } catch (err) {
+            return reject(err)
+        }
 
         first_data = String(first_data)
 

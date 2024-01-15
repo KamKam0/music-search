@@ -15,10 +15,15 @@ module.exports = async (token, Arg) => {
 
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
         if(!validate(Arg)) return reject(new Error("Incorrect URL", 2))
+        let datas;
 
         if(Arg.includes("on.soundcloud.com")){
-            let datas = await fetch(Arg)
-            datas = await datas.text()
+            try {
+                datas = await fetch(Arg)
+                datas = await datas.text()
+            } catch (err) {
+                return reject(err)
+            }
             let titleFoundOrNot = datas.split("<title>")?.[1]?.split("</title>")?.[0]
             if(!titleFoundOrNot) return reject(new Error("Cannot resolve this URL", 14))
             titleFoundOrNot = titleFoundOrNot.toLowerCase().replaceAll(" ", "")
@@ -39,11 +44,12 @@ module.exports = async (token, Arg) => {
             return resolve({type: datas.kind, datas})
         }
 
-        let datas = await fetch(`https://api-v2.soundcloud.com/resolve?url=${encodeURI(Arg)}&client_id=${token}`)
-        
-        if(!datas) return reject(new Error("Cannot resolve this URL", 14))
-        
-        datas = await datas.json()
+        try {
+            datas = await fetch(`https://api-v2.soundcloud.com/resolve?url=${encodeURI(Arg)}&client_id=${token}`)
+            datas = await datas.json()
+        } catch (err) {
+            return reject(err)
+        }
 
         if(["playlist", "track", "album"].includes(datas.kind)) return resolve({type: datas.kind, datas})
         return reject(new Error("Cannot resolve this URL", 14))

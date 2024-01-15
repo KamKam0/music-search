@@ -8,12 +8,17 @@ module.exports = async (token, searchArg) => {
             return reject(new Error("No valid argument given", 1))
         } 
 
-        let request = await fetch(`https://api.spotify.com/v1/search?q=${searchArg}&type=track&limit=25`, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            },
-        })
-        let requestData = await request.json()
+        let requestData;
+        try {
+            let request = await fetch(`https://api.spotify.com/v1/search?q=${searchArg}&type=track&limit=25`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
+            })
+            requestData = await request.json()
+        } catch(err) {
+            return reject(err)
+        }
 
         if (typeof requestData !== 'object') {
             return reject(new Error("Cannot resolve this search", 15))

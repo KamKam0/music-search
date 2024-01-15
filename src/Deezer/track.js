@@ -19,8 +19,13 @@ module.exports = async (Arg, state) => {
         if(!validate(Arg, "track")) return reject(new Error("Incorrect URL", 2))
 
         let ID = Arg.split("/track/")[1]
-        let datas = await fetch(`https://api.deezer.com/track/${ID.includes("?") ? ID.split("?")[0]: ID}`)
-        datas = await datas.json()
+        let datas;
+        try {
+            datas = await fetch(`https://api.deezer.com/track/${ID.includes("?") ? ID.split("?")[0]: ID}`)
+            datas = await datas.json()
+        } catch (err) {
+            return reject(err)
+        }
 
         if(!datas || datas.error?.code === 800) return reject(new Error("Could not find the track", 9))
         

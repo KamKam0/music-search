@@ -19,8 +19,13 @@ module.exports = async (Arg) => {
         if(!validate(Arg, "playlist")) return reject(new Error("Incorrect URL", 2))
 
         let ID = Arg.split("/playlist/")[1]
-        let datas = await fetch(`https://api.deezer.com/playlist/${ID.includes("?") ? ID.split("?")[0]: ID}`)
-        datas = await datas.json()
+        let datas;
+        try {
+            datas = await fetch(`https://api.deezer.com/playlist/${ID.includes("?") ? ID.split("?")[0]: ID}`)
+            datas = await datas.json()
+        } catch (err) {
+            return reject(err)
+        }
 
         if(datas.error?.type === "OAuthException" && datas.error?.code === 200) return reject(new Error("Could not find the playlist", 7))
 

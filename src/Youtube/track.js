@@ -18,14 +18,18 @@ module.exports = async (Arg, state) => {
         else var ID = Arg.split(".be/")[1]
         if(!ID) return reject(new Error("Could not find the ID of the track", 8))
         ID.split("&")[0]
-
-        let data = await fetch(`https://www.youtube.com/watch?v=${ID}&has_verified=1`, {
-            headers: {
-                'accept-language': 'en-US,en-IN;q=0.9,en;q=0.8,hi;q=0.7',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36',
-            }
-        })
-        let datas = await data.text()
+        let datas;
+        try {
+          let data = await fetch(`https://www.youtube.com/watch?v=${ID}&has_verified=1`, {
+              headers: {
+                  'accept-language': 'en-US,en-IN;q=0.9,en;q=0.8,hi;q=0.7',
+                  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36',
+              }
+          })
+          datas = await data.text()
+        } catch(err) {
+            return reject(err)
+        }
 
         if (datas.indexOf('Our systems have detected unusual traffic from your computer network.') !== -1) return reject(new Error("Error interacting with youtube", 6))
         

@@ -37,13 +37,23 @@ module.exports = async (token, datas, type) => {
                     to_search = to_search.slice(49, to_search.length - 1)
                 }
                 allIds.push(to_search)
-                let requests = await Promise.all(allIds.map(ids => fetch(`https://api-v2.soundcloud.com/tracks?ids=${ids.toString()}&client_id=${token}`)))
-                let jsonRequest = await Promise.all(requests.map(request => request.json()))
-                res.push(...jsonRequest.flat().map(track =>  new Track({...analyser(track), token})))
+                let jsonRequest;
+                try {
+                    let requests = await Promise.all(allIds.map(ids => fetch(`https://api-v2.soundcloud.com/tracks?ids=${ids.toString()}&client_id=${token}`)))
+                    jsonRequest = await Promise.all(requests.map(request => request.json()))
+                } catch {}
+                if (jsonRequest) {
+                    res.push(...jsonRequest.flat().map(track =>  new Track({...analyser(track), token})))
+                }
             } else {
-                var restmusic = await fetch(`https://api-v2.soundcloud.com/tracks?ids=${to_search.map(track => track.id).slice(0, 50).toString()}&client_id=${token}`)
-                restmusic = await restmusic.json()
-                res.push(...restmusic.map(track =>  new Track({...analyser(track), token})))
+                let restmusic;
+                try {
+                    restmusic = await fetch(`https://api-v2.soundcloud.com/tracks?ids=${to_search.map(track => track.id).slice(0, 50).toString()}&client_id=${token}`)
+                    restmusic = await restmusic.json()
+                } catch{}
+                if (restmusic) {
+                    res.push(...restmusic.map(track =>  new Track({...analyser(track), token})))
+                }
             }
         }
         

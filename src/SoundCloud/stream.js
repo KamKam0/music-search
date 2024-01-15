@@ -30,8 +30,13 @@ module.exports.link = async (token, stream_url, format, withDetails) => {
             if(!streamInfos || typeof streamInfos.url !== "string") return reject(new Error("No stream link available for this song", 4))
             if(typeof withDetails !== "boolean") withDetails = false
 
-            const received = await fetch(`${streamInfos.url}?client_id=${token}`);
-            const stream = await received.json();
+            let stream;
+            try {
+                const received = await fetch(`${streamInfos.url}?client_id=${token}`);
+                stream = await received.json();
+            } catch (err) {
+                return reject(err)
+            }
 
             if(!stream || !stream.url) return reject(new Error("The stream could not be resolved", 16))
             

@@ -7,9 +7,14 @@ module.exports = async (token, searchArg) => {
         if (typeof searchArg !== 'string') {
             return reject(new Error("No valid argument given", 1))
         } 
+        let requestData;
+        try {
+            const request = await fetch(`https://soundcloud.com/search?q=${searchArg}`)
+            requestData = await request.text()
+        } catch (err) {
+            return reject(err)
+        }
 
-        const request = await fetch(`https://soundcloud.com/search?q=${searchArg}`)
-        const requestData = await request.text()
         if (typeof requestData !== 'string') {
             return reject(new Error("Cannot resolve this search", 15))
         }

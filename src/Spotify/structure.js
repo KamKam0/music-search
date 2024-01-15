@@ -60,8 +60,13 @@ class Spotify extends base{
                     method: "POST",
                     json: true
                 }
-                let datas = await fetch("https://accounts.spotify.com/api/token", opts)
-                datas = await datas.json()
+                let datas;
+                try {
+                    datas = await fetch("https://accounts.spotify.com/api/token", opts)
+                    datas = await datas.json()
+                } catch(err) {
+                    return reject(err)
+                }
                 let token = datas.access_token
                 if(token){
                     this._token = token

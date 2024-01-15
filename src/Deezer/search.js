@@ -8,8 +8,13 @@ module.exports = async (searchArg) => {
             return reject(new Error("No valid argument given", 1))
         } 
 
-        const request = await fetch(`https://api.deezer.com/search?q=track:"${searchArg}"&index:25`)
-        const requestData = await request.json()
+        let requestData;
+        try {
+            const request = await fetch(`https://api.deezer.com/search?q=track:"${searchArg}"&index:25`)
+            requestData = await request.json()
+        } catch (err) {
+            return reject(err)
+        }
         if (typeof requestData !== 'object') {
             return reject(new Error("Cannot resolve this search", 15))
         }

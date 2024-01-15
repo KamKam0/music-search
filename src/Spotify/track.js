@@ -14,12 +14,17 @@ module.exports = async (token, Arg, state) => {
         if(!Arg || typeof Arg !== "string") return reject(new Error("No valid argument given", 1))
         if(!validate(Arg, "track")) return reject(new Error("Incorrect URL", 2))
         let base = Arg.split("track/")[1]
-        let datas = await fetch(`https://api.spotify.com/v1/tracks/${base.includes("?") ? base.split("?")[0]: base}`, {
-            headers: {
-                "Authorization": `Bearer ${token}`
-            },
-        })
-        datas = await datas.json()
+        let datas;
+        try {
+            datas = await fetch(`https://api.spotify.com/v1/tracks/${base.includes("?") ? base.split("?")[0]: base}`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                },
+            })
+            datas = await datas.json()
+        } catch(err) {
+            return reject(err)
+        }
         
         if(datas.error?.status === 404) return reject(new Error("Could not find the track", 9))
 

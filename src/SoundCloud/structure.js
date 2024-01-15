@@ -38,8 +38,8 @@ class SoundCloud extends base{
                         this._token = datas
                         this._timestamp = Date.now()
                         return resolve(this._token)
-                    })
-                })
+                    }).catch(() => {})
+                }).catch(() => {})
                 
             }else return resolve(this._token)
         })
