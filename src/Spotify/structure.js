@@ -1,5 +1,6 @@
 const base = require("../Classes/baseStrucAl")
 const fetch = require("node-fetch")
+const searchSpotify = require('./search')
 
 class Spotify extends base{
     constructor(client_id, client_secret){
@@ -24,6 +25,22 @@ class Spotify extends base{
          * @type {string}
          */
         this._timestamp = null
+    }
+
+    /**
+     * 
+     * @param {string} Arg 
+     * @returns {object[]}
+     */
+    search(Arg){
+        return new Promise(async (resolve, reject) => {
+            this._getToken()
+            .then(() => {
+                searchSpotify(this._token, Arg)
+                .catch(err => reject(err) )
+                .then(datas => resolve(datas))
+            })
+        })
     }
 
     /**

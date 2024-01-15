@@ -11,7 +11,7 @@ class Base{
     constructor(name){
         this.type = name
 
-        this.available = ["track", "resolve", "playlist", "album", "search", "validate"]
+        this.available = ["track", "resolve", "playlist", "album", "search", "validate", "stream"]
         .filter(element => fs.readdirSync(require.resolve(`../${this.type}/structure`).split(osSpace + "structure")[0]).find(dispo => dispo.split(".")[0] === element))
     }
 
@@ -21,11 +21,7 @@ class Base{
      * @returns {Track}
      */
     getTrack(Arg, state){
-        return new Promise(async (resolve, reject) => {
-            this._requestMaker("track", Arg, state)
-            .catch(err => reject(err))
-            .then(datas => resolve(datas))
-        })
+        return this._requestMaker("track", Arg, state)
     }
 
     /**
@@ -34,11 +30,7 @@ class Base{
      * @returns {Playlist}
      */
     getPlaylist(Arg){
-        return new Promise(async (resolve, reject) => {
-            this._requestMaker("playlist", Arg)
-            .catch(err => reject(err))
-            .then(datas => resolve(datas))
-        })
+        return this._requestMaker("playlist", Arg)
     }
 
     /**

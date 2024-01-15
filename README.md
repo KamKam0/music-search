@@ -121,14 +121,10 @@ Album Command
     */
 ```
 
-### Specific use
-
-Youtube Search
+Search
 
 ```js
-    const MusicSearch = require("@kamkam1_0/music-search")
-    let Youtube = new MusicSearch.Youtube()
-    let songs = await Youtube.search("despacito")
+    let search = await Platform.search("despacito")
     /*Expected Output:
     [
         Track {

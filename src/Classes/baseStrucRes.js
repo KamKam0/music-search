@@ -11,11 +11,7 @@ class BaseResolve extends base{
      * @returns {Playlist|Album|Track}
      */
     resolve(Arg){
-        return new Promise(async (resolve, reject) => {
-            this._requestMaker("resolve", Arg)
-            .catch(err => reject(err))
-            .then(datas => resolve(datas))
-        })
+        return this._requestMaker("resolve", Arg)
     }
 }
 

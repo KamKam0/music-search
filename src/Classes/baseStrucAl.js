@@ -11,11 +11,7 @@ class BaseAlbum extends base{
      * @returns {Album}
      */
     getAlbum(Arg){
-        return new Promise(async (resolve, reject) => {
-            this._requestMaker("album", Arg)
-            .catch(err => reject(err))
-            .then(datas => resolve(datas))
-        })
+        return this._requestMaker("album", Arg)
     }
 }
 

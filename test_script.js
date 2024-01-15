@@ -128,6 +128,18 @@ soundcloud.resolve('https://soundcloud.com/luisfonsiofficial/despacito?utm_sourc
     console.log()
 })
 
+soundcloud.search('despacito')
+.then(data => {
+    console.log('searchPositiveTest')
+    console.log(data)
+    console.log()
+})
+.catch(err => {
+    console.log('searchNegativeTest: failed')
+    console.log(err)
+    console.log()
+})
+
 // Deezer tests
 console.log('Deezer tests')
 
@@ -201,6 +213,18 @@ deezer.resolve('https://deezer.page.link/mCYzX2nvG7k5eqUj9')
     console.log()
 })
 
+deezer.search('despacito')
+.then(data => {
+    console.log('searchPositiveTest')
+    console.log(data)
+    console.log()
+})
+.catch(err => {
+    console.log('searchNegativeTest: failed')
+    console.log(err)
+    console.log()
+})
+
 // Spotify tests
 console.log('Spotify tests')
 
@@ -258,6 +282,18 @@ spotify.getAlbum('https://open.spotify.com/intl-fr/album/5qnvJbamuZLbsasuYKRy1l'
 })
 .catch(err => {
     console.log('getAlbumNegativeTest: failed')
+    console.log(err)
+    console.log()
+})
+
+spotify.search('despacito')
+.then(data => {
+    console.log('searchPositiveTest')
+    console.log(data)
+    console.log()
+})
+.catch(err => {
+    console.log('searchNegativeTest: failed')
     console.log(err)
     console.log()
 })

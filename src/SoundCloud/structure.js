@@ -1,6 +1,7 @@
 const base = require("../Classes/baseStrucRes")
 const fetch = require("node-fetch")
 const streamResolver = require("./stream")
+const searchSoundcloud = require('./search')
 const streamDownloader = require('../utils/stream')
 
 class SoundCloud extends base{
@@ -57,6 +58,22 @@ class SoundCloud extends base{
             this._getToken()
             .then(() => {
                 streamResolver.link(this._token, link, format, withDetails)
+                .catch(err => reject(err) )
+                .then(datas => resolve(datas))
+            })
+        })
+    }
+    
+    /**
+     * 
+     * @param {string} Arg 
+     * @returns {object[]}
+     */
+    search(Arg){
+        return new Promise(async (resolve, reject) => {
+            this._getToken()
+            .then(() => {
+                searchSoundcloud(this._token, Arg)
                 .catch(err => reject(err) )
                 .then(datas => resolve(datas))
             })
