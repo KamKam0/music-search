@@ -40,6 +40,7 @@ class Spotify extends base{
                 .catch(err => reject(err) )
                 .then(datas => resolve(datas))
             })
+            .catch(err => reject(err))
         })
     }
 
@@ -50,6 +51,7 @@ class Spotify extends base{
     _getToken(){
         return new Promise(async (resolve, reject) => {
             if((Date.now() - Number(this._timestamp)) >= (1000 * 60 * 60)){
+                
                 const encode = new Buffer.from(`${this._id}:${this._secret}`).toString("base64")
                 const opts = {
                     body: 'grant_type=client_credentials',
@@ -60,6 +62,7 @@ class Spotify extends base{
                     method: "POST",
                     json: true
                 }
+                
                 let datas;
                 try {
                     datas = await fetch("https://accounts.spotify.com/api/token", opts)
@@ -67,14 +70,18 @@ class Spotify extends base{
                 } catch(err) {
                     return reject(err)
                 }
+                
                 let token = datas.access_token
+
                 if(token){
                     this._token = token
                     this._timestamp = Date.now()
                     return resolve(token)
-                }else return reject(token)
+                }else return reject(datas.error_description)
                 
-            }return resolve(this._token)
+            }
+            
+            return resolve(this._token)
         })
     }
 }

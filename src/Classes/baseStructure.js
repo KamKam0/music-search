@@ -71,7 +71,8 @@ class Base{
             .then(() => {
                 if(this._token) require(`../${this.type}/${type}`)(this._token, arg, state).catch(err => reject(err)).then(datas => resolve(datas))
                 else require(`../${this.type}/${type}`)(arg, state).catch(err => reject(err)).then(datas => resolve(datas))
-            }).catch(err => {})
+            })
+            .catch(err => reject(err))
         })
     }
 

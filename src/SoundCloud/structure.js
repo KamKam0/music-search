@@ -61,6 +61,7 @@ class SoundCloud extends base{
                 .catch(err => reject(err) )
                 .then(datas => resolve(datas))
             })
+            .catch(err => reject(err))
         })
     }
     
@@ -77,6 +78,7 @@ class SoundCloud extends base{
                 .catch(err => reject(err) )
                 .then(datas => resolve(datas))
             })
+            .catch(err => reject(err))
         })
     }
 
