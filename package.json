@@ -28,7 +28,7 @@
   ],
   "homepage": "https://github.com/KamKam0/music-search",
   "author": "KamKam <kamkam.dev.contact@gmail.com>",
-  "license": "ISC",
+  "license": "MPL 2.0",
   "dependencies": {
     "node-fetch": "^2.6.7"
   }
